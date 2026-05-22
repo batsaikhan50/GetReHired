@@ -23,6 +23,86 @@ export const industries = [
   'Government / Public Service', 'Non-profit / Social Work', 'Other',
 ]
 
+// Job titles per industry — shown after the user picks their industry
+// so they see roles they actually recognise rather than a blank text box.
+export const jobTitlesByIndustry: Record<string, string[]> = {
+  'Manufacturing / Factory': [
+    'Machine Operator', 'Assembly Line Worker', 'Warehouse Worker',
+    'Forklift Driver', 'Quality Inspector', 'Production Supervisor',
+    'Maintenance Technician', 'Other',
+  ],
+  'Customer Service': [
+    'Customer Service Rep', 'Call Centre Agent', 'Help Desk Agent',
+    'Support Specialist', 'Team Lead / Supervisor', 'Complaints Handler', 'Other',
+  ],
+  'Retail / Sales': [
+    'Cashier', 'Sales Associate', 'Store Manager',
+    'Inventory Specialist', 'Visual Merchandiser', 'Buyer / Purchasing', 'Other',
+  ],
+  'Information Technology': [
+    'Software Engineer', 'IT Support Specialist', 'Data Analyst',
+    'Network Administrator', 'DevOps / Cloud Engineer', 'Project Manager',
+    'UX / UI Designer', 'Other',
+  ],
+  'Healthcare / Medical': [
+    'Nurse / Nursing Assistant', 'Medical Assistant', 'Admin Coordinator',
+    'Lab Technician', 'Pharmacist', 'Patient Care Technician', 'Other',
+  ],
+  'Finance / Accounting': [
+    'Accountant', 'Bookkeeper', 'Financial Analyst',
+    'Payroll Specialist', 'Auditor', 'Bank Teller', 'Other',
+  ],
+  'Education / Teaching': [
+    'Teacher', 'Teaching Assistant', 'Tutor',
+    'School Administrator', 'Curriculum Designer', 'Librarian', 'Other',
+  ],
+  'Transportation / Delivery': [
+    'Truck Driver', 'Delivery Driver', 'Dispatcher',
+    'Fleet Manager', 'Warehouse Coordinator', 'Courier', 'Other',
+  ],
+  'Construction / Trades': [
+    'Carpenter', 'Electrician', 'Plumber',
+    'Site Manager', 'Labourer', 'Estimator / Quantity Surveyor', 'Other',
+  ],
+  'Food Service / Hospitality': [
+    'Chef / Cook', 'Server / Waiter', 'Bartender',
+    'Hotel / Front Desk Staff', 'Kitchen Manager', 'Event Staff', 'Other',
+  ],
+  'Administrative / Office': [
+    'Administrative Assistant', 'Office Manager', 'Receptionist',
+    'Data Entry Clerk', 'Executive Assistant', 'Operations Coordinator', 'Other',
+  ],
+  'Marketing / Media': [
+    'Marketing Manager', 'Content Writer / Copywriter', 'Social Media Manager',
+    'Graphic Designer', 'SEO Specialist', 'PR / Communications Manager', 'Other',
+  ],
+  'Legal / Law': [
+    'Paralegal', 'Legal Secretary', 'Compliance Officer',
+    'Legal Assistant', 'Court Reporter', 'Other',
+  ],
+  'Agriculture': [
+    'Farm Worker', 'Agricultural Manager', 'Equipment Operator',
+    'Agronomist', 'Livestock Worker', 'Other',
+  ],
+  'Arts / Design': [
+    'Graphic Designer', 'Illustrator / Artist', 'Photographer',
+    'Video Editor', 'Art Director', 'Animator', 'Other',
+  ],
+  'Engineering': [
+    'Civil Engineer', 'Mechanical Engineer', 'Electrical Engineer',
+    'Project Engineer', 'Technician', 'CAD Designer', 'Other',
+  ],
+  'Government / Public Service': [
+    'Government Officer', 'Policy Analyst', 'Public Administrator',
+    'Inspector / Enforcement Officer', 'Social Worker', 'Other',
+  ],
+  'Non-profit / Social Work': [
+    'Program Coordinator', 'Case Manager', 'Community Outreach Worker',
+    'Grant Writer', 'Volunteer Manager', 'Other',
+  ],
+  'Other': ['Other'],
+}
+
 export const countries = [
   'Mongolia', 'United States', 'United Kingdom', 'Australia', 'Canada',
   'Germany', 'France', 'Japan', 'South Korea', 'India', 'China',
@@ -56,14 +136,17 @@ export const blocks: Block[] = [
     id: 2,
     questions: [
       {
-        id: 'jobTitle',
-        text: 'What was your most recent job title?',
-        subtitle: "E.g. 'cashier', 'warehouse worker', 'site manager'. Be specific.",
-        type: 'text', field: 'jobTitle',
+        id: 'industry', text: 'Which industry did you work in?',
+        type: 'dropdown', field: 'industry', options: industries,
       },
       {
-        id: 'industry', text: 'Which industry?',
-        type: 'dropdown', field: 'industry', options: industries,
+        id: 'jobTitle',
+        text: 'What was your most recent role?',
+        subtitle: 'Pick the closest match — options change based on your industry.',
+        // Options are injected dynamically in assessment/page.tsx based on answers.industry.
+        // This fallback list is only used if industry hasn't been answered yet.
+        type: 'single', field: 'jobTitle',
+        options: ['Other'],
       },
       {
         id: 'experience', text: 'Total years of work experience?',

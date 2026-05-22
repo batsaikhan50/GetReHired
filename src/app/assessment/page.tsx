@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/navigation'
-import { blocks, totalQuestions, Question } from '@/lib/assessmentData'
+import { blocks, totalQuestions, Question, jobTitlesByIndustry } from '@/lib/assessmentData'
 import { getMicroFeedback } from '@/lib/microFeedback'
 import { getRewardContent } from '@/lib/rewardContent'
 import { useLang } from '@/contexts/LanguageContext'
@@ -289,8 +289,8 @@ export default function AssessmentPage() {
       firstName: 'Bat',
       age: '26–30',
       country: 'Mongolia',
-      jobTitle: 'Factory Supervisor',
       industry: 'Manufacturing / Factory',
+      jobTitle: 'Production Supervisor',
       experience: '3–5 years',
       dailyTasks: [
         'Managed people or a team',
@@ -350,6 +350,14 @@ export default function AssessmentPage() {
 
           const isCurrent = offset === 0
 
+          // Inject industry-specific job title options dynamically
+          const resolvedQ: Question = q.id === 'jobTitle'
+            ? {
+                ...q,
+                options: jobTitlesByIndustry[answers.industry as string] ?? ['Other'],
+              }
+            : q
+
           return (
             <motion.div
               key={`${blockIdx}-${q.id}`}
@@ -374,7 +382,7 @@ export default function AssessmentPage() {
                     {t('Question')} {idx + 1} / {block.questions.length}
                   </p>
                   <QuestionCardContent
-                    question={q}
+                    question={resolvedQ}
                     isCurrent={isCurrent}
                     currentAnswer={answers[q.field] ?? ''}
                     onSingle={(v) => handleSingle(q, v)}
