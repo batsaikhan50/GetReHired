@@ -7,6 +7,13 @@ const VALID_CAREERS = new Set([
   'Logistics Coordinator', 'Customer Success Manager', 'Operations Analyst',
   'Social Media Manager', 'Corporate Trainer', 'Cybersecurity Analyst',
   'Software Developer',
+  // New careers
+  'Financial Analyst', 'Healthcare Administrator', 'IT Support Specialist',
+  'Graphic Designer', 'Video Editor', 'Supply Chain Analyst',
+  'Business Development Manager', 'Account Manager', 'E-commerce Specialist',
+  'Instructional Designer', 'QA Analyst', 'Event Coordinator',
+  'Technical Recruiter', 'SEO Specialist', 'Real Estate Agent',
+  'DevOps Engineer', 'Non-profit Program Coordinator',
 ])
 
 // ── A03: Whitelist of valid country values ────────────────────────────────────
