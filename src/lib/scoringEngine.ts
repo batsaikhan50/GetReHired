@@ -1555,6 +1555,105 @@ function hireWeeks(timeToHire: string): number {
 // tasks 40 + skills 30 + tools 10 + industry 8 + superpower 7 + jobType 3 + salary 5 + urgency 5
 const MAX_RAW = 108
 
+// ─── Smart career pool filter ─────────────────────────────────────────────────
+// Removes careers the user has ZERO signals for — no point scoring a nurse as
+// a DevOps Engineer at 8% when they've never touched code. Filters based on
+// what the user actually showed in their answers. Falls back to full list if
+// filters trim the pool below 13 careers (e.g. very sparse answers).
+
+function filterCareerPool(profiles: CareerProfile[], answers: Answers): CareerProfile[] {
+  const tasks      = (answers.dailyTasks as string[]) || []
+  const skills     = (answers.skills     as string[]) || []
+  const tools      = (answers.tools      as string[]) || []
+  const superpower = (answers.superpower as string)   || ''
+  const jobType    = (answers.jobType    as string)   || ''
+  const retraining = (answers.retraining as string)   || ''
+  const salaryRaw  = answers.salaryExpect
+  const salaries   = Array.isArray(salaryRaw) ? salaryRaw : (salaryRaw ? [salaryRaw] : [])
+
+  // ── Capability signals ──────────────────────────────────────────────────────
+  const hasCoding   = tasks.includes('💻 Coded or developed software')
+                   || skills.includes('💻 Programming & coding')
+                   || superpower === 'Build & ship software'
+
+  const hasDesign   = tasks.includes('🎨 Created designs or visual content')
+                   || skills.includes('🎨 Graphic design')
+                   || tools.includes('🎨 Design tools (Canva, Figma, Photoshop)')
+                   || superpower === 'Write, design, or create'
+
+  const hasSales    = tasks.includes('🤝 Sold products or services')
+                   || skills.includes('🤝 Sales & persuasion')
+
+  const hasData     = tasks.includes('📊 Analyzed data & reports')
+                   || skills.includes('📈 Data analysis & reports')
+                   || skills.includes('📊 Excel & spreadsheets')
+                   || superpower === 'Make sense of data'
+
+  const hasVideo    = tools.includes('🎬 Video / audio editing')
+
+  const hasFinance  = tasks.includes('💰 Handled money & finances')
+                   || skills.includes('💰 Budgeting & finance')
+
+  const wantsPhysical = jobType === 'Physical, hands-on work'
+
+  // Salary bounds: what's the lowest and highest the user will accept?
+  const salaryValues   = salaries.map((s) => salaryMidpoint[s] || 55000)
+  const lowestAccepted = salaryValues.length ? Math.min(...salaryValues) : 0
+  const highestAccepted = salaryValues.length ? Math.max(...salaryValues) : 999_999
+
+  // Careers that require retraining to be meaningful — only show if user is open to it
+  const openToRetraining = !retraining.includes('❌')
+
+  // ── Purely desk/office careers — hidden when user explicitly wants physical work
+  const deskOnly = new Set([
+    'Data Analyst', 'Financial Analyst', 'Operations Analyst',
+    'HR Specialist', 'Social Media Manager', 'Content Creator / Copywriter',
+    'SEO Specialist', 'Instructional Designer', 'Corporate Trainer',
+  ])
+
+  const filtered = profiles.filter((career) => {
+    // ── Coding gate ──────────────────────────────────────────────────────────
+    if (['Software Developer', 'DevOps Engineer', 'Cybersecurity Analyst'].includes(career.title)) {
+      if (!hasCoding) return false
+    }
+
+    // ── Design gate ──────────────────────────────────────────────────────────
+    if (['Graphic Designer', 'UX / Product Designer'].includes(career.title)) {
+      if (!hasDesign) return false
+    }
+    if (career.title === 'Video Editor') {
+      if (!hasDesign && !hasVideo) return false
+    }
+
+    // ── Sales gate ───────────────────────────────────────────────────────────
+    if (['Sales Representative', 'Real Estate Agent', 'Business Development Manager'].includes(career.title)) {
+      if (!hasSales) return false
+    }
+
+    // ── Data gate ────────────────────────────────────────────────────────────
+    // Show data careers only if user has data signals OR is open to retraining
+    if (['Data Analyst', 'Financial Analyst', 'Operations Analyst'].includes(career.title)) {
+      if (!hasData && !openToRetraining) return false
+      // Financial Analyst also needs some finance or data background
+      if (career.title === 'Financial Analyst' && !hasData && !hasFinance) return false
+    }
+
+    // ── Physical work preference ─────────────────────────────────────────────
+    if (wantsPhysical && deskOnly.has(career.title)) return false
+
+    // ── Salary hard ceiling ──────────────────────────────────────────────────
+    // Drop if career's minimum salary is way above what user would ever accept
+    if (salaryValues.length && highestAccepted < career.salaryMin * 0.6) return false
+    // Drop if career's maximum salary is way below even the user's lowest range
+    if (salaryValues.length && lowestAccepted > career.salaryMax * 1.5) return false
+
+    return true
+  })
+
+  // Safety net: never return fewer than 13 careers
+  return filtered.length >= 13 ? filtered : profiles
+}
+
 // ─── Main scoring function ────────────────────────────────────────────────────
 
 export function calculateMatches(answers: Answers, lang: Lang = 'en'): CareerMatch[] {
@@ -1575,7 +1674,9 @@ export function calculateMatches(answers: Answers, lang: Lang = 'en'): CareerMat
   const isAsap      = userUrgency.includes('ASAP')
   const isWithin3mo = userUrgency.includes('3 months')
 
-  return careerProfiles
+  const pool = filterCareerPool(careerProfiles, answers)
+
+  return pool
     .map((career) => {
       let score = 0
 
