@@ -358,6 +358,12 @@ export default function AssessmentPage() {
               }
             : q
 
+          // Right card is clickable if:
+          //  a) it was already answered (user is navigating back through answered questions), OR
+          //  b) the current center card is answered (user went back and wants to move forward again)
+          const centerAnswered = canProceed(block.questions[questionIdx])
+          const rightClickable = offset > 0 && (!!answers[q.field] || centerAnswered)
+
           return (
             <motion.div
               key={`${blockIdx}-${q.id}`}
@@ -370,8 +376,8 @@ export default function AssessmentPage() {
                 opacity: 1,
               }}
               transition={{ type: 'spring', stiffness: 160, damping: 28 }}
-              style={{ pointerEvents: 'auto', zIndex: isCurrent ? 10 : 1, transformOrigin: 'top center', cursor: isCurrent ? 'default' : (offset < 0 || answers[q.field] ? 'pointer' : 'default') }}
-              onClick={!isCurrent ? (offset < 0 ? handleBack : answers[q.field] ? () => setQuestionIdx(idx) : undefined) : undefined}
+              style={{ pointerEvents: 'auto', zIndex: isCurrent ? 10 : 1, transformOrigin: 'top center', cursor: isCurrent ? 'default' : (offset < 0 || rightClickable ? 'pointer' : 'default') }}
+              onClick={!isCurrent ? (offset < 0 ? handleBack : rightClickable ? () => setQuestionIdx(idx) : undefined) : undefined}
             >
               {/* Card box */}
               <div className={`relative bg-[#161b25] border rounded-3xl p-6 flex flex-col ${
