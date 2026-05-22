@@ -265,8 +265,27 @@ const mn: Record<string, string> = {
   // ── Results page ─────────────────────────────────────────────────────────────
   'Results':              'Үр дүн',
   "'s Career Matches":    '-н ажилын тохирлууд',
+  "'s Escape Plan":       '-н гарах зам',
   'Ranked by compatibility · Live roles included':
     'Нийцлээр эрэмбэлэгдсэн · Бодит ажлын байрууд',
+  "Here's where you stand — and where you can go":
+    'Та хаана байгаа болон хаашаа явж болох',
+
+  // ── Threat assessment ────────────────────────────────────────────────────────
+  'The honest picture':               'Үнэн байдал',
+  'Critical automation risk':         'Хамгийн өндөр автоматжуулалтын эрсдэл',
+  'High automation risk':             'Өндөр автоматжуулалтын эрсдэл',
+  'Moderate automation risk':         'Дунд зэргийн автоматжуулалтын эрсдэл',
+  'Lower automation risk':            'Харьцангуй бага автоматжуулалтын эрсдэл',
+  'of tasks in this role are being automated':
+    'даалгавар автоматжиж байна',
+  "Why it's happening":               'Яагаад болж байна',
+  'Your tasks being replaced':        'Орлогдож байгаа даалгаврууд',
+  "What machines still can't take from you":
+    'Машин таанаас авч чадахгүй зүйл',
+  'The one thing to add':             'Нэмэх ганц зүйл',
+  'Someone who made this jump':       'Энэ алхамыг хийсэн хүн',
+  'AI-resistant':                     'AI-д тэсвэртэй',
   'Salary':               'Цалин',
   'Time to hire':         'Хугацаа',
   '▼ Why this fits you':  '▼ Яагаад тохирч байна',
@@ -333,8 +352,14 @@ const mn: Record<string, string> = {
   'Other':          'Бусад',
 
   // ── Block 2: Your Work ───────────────────────────────────────────────────────
+  'Which industry did you work in?':
+    'Ямар салбарт ажиллаж байсан бэ?',
   'What was your most recent job title?':
     'Сүүлийн ажлын байрны нэр?',
+  'What was your most recent role?':
+    'Сүүлийн ажлын байр юу байсан бэ?',
+  'Pick the closest match — options change based on your industry.':
+    'Хамгийн ойрхон сонголтыг сонгоно уу — салбараас хамаарч өөрчлөгдөнө.',
   "E.g. 'cashier', 'warehouse worker', 'site manager'. Be specific.":
     "Жнь: 'кассчин', 'агуулахын ажилчин', 'менежер'",
   'Which industry?':
@@ -520,6 +545,148 @@ const mn: Record<string, string> = {
   '👍 Yes, if it leads to a job': '👍 Тийм, ажилд хүргэвэл',
   "🤔 Maybe, if it's quick":      "🤔 Магадгүй, хурдан бол",
   "❌ Prefer my current skills":  '❌ Одоогийн ур чадвараа ашиглах',
+
+  // ── Job titles by industry ───────────────────────────────────────────────────
+  // Manufacturing / Factory
+  'Machine Operator':         'Машин ажиллуулагч',
+  'Assembly Line Worker':     'Угсралтын шугамын ажилчин',
+  'Warehouse Worker':         'Агуулахын ажилчин',
+  'Forklift Driver':          'Форклифтийн жолооч',
+  'Quality Inspector':        'Чанарын хянагч',
+  'Production Supervisor':    'Үйлдвэрлэлийн ахлагч',
+  'Maintenance Technician':   'Засвар үйлчилгээний техникч',
+
+  // Customer Service
+  'Customer Service Rep':     'Харилцагчийн үйлчилгээний төлөөлөгч',
+  'Call Centre Agent':        'Дуудлагын төвийн ажилтан',
+  'Help Desk Agent':          'Туслах ширээний ажилтан',
+  'Support Specialist':       'Дэмжлэгийн мэргэжилтэн',
+  'Team Lead / Supervisor':   'Багийн ахлагч / Хяналтын ажилтан',
+  'Complaints Handler':       'Гомдол хариуцагч',
+
+  // Retail / Sales
+  'Cashier':                  'Кассчин',
+  'Sales Associate':          'Борлуулалтын туслах',
+  'Store Manager':            'Дэлгүүрийн менежер',
+  'Inventory Specialist':     'Бараа нөөцийн мэргэжилтэн',
+  'Visual Merchandiser':      'Дэлгэцийн мерчандайзер',
+  'Buyer / Purchasing':       'Худалдан авалтын ажилтан',
+
+  // Information Technology
+  'Software Engineer':        'Программ хангамжийн инженер',
+  'IT Support Specialist':    'МТ-ийн дэмжлэгийн мэргэжилтэн',
+  'Data Analyst':             'Өгөгдлийн аналист',
+  'Network Administrator':    'Сүлжээний администратор',
+  'DevOps / Cloud Engineer':  'DevOps / Клаудын инженер',
+  'Project Manager':          'Төслийн менежер',
+  'UX / UI Designer':         'UX / UI Дизайнер',
+
+  // Healthcare / Medical
+  'Nurse / Nursing Assistant':    'Сувилагч / Сувилахын туслах',
+  'Medical Assistant':            'Эмнэлгийн туслах',
+  'Admin Coordinator':            'Захиргааны зохицуулагч',
+  'Lab Technician':               'Лабораторийн техникч',
+  'Pharmacist':                   'Эмийн сангийн эмч',
+  'Patient Care Technician':      'Өвчтөний асрамжийн техникч',
+
+  // Finance / Accounting
+  'Accountant':               'Нягтлан бодогч',
+  'Bookkeeper':               'Дэвтэр хөтлөгч',
+  'Financial Analyst':        'Санхүүгийн аналист',
+  'Payroll Specialist':       'Цалингийн мэргэжилтэн',
+  'Auditor':                  'Аудитор',
+  'Bank Teller':              'Банкны кассчин',
+
+  // Education / Teaching
+  'Teacher':                  'Багш',
+  'Teaching Assistant':       'Багшийн туслах',
+  'Tutor':                    'Нэмэлт хичээлийн багш',
+  'School Administrator':     'Сургуулийн захирал',
+  'Curriculum Designer':      'Хөтөлбөр боловсруулагч',
+  'Librarian':                'Номын санч',
+
+  // Transportation / Delivery
+  'Truck Driver':             'Ачааны машины жолооч',
+  'Delivery Driver':          'Хүргэлтийн жолооч',
+  'Dispatcher':               'Диспетчер',
+  'Fleet Manager':            'Тээврийн парк менежер',
+  'Warehouse Coordinator':    'Агуулахын зохицуулагч',
+  'Courier':                  'Куръе / Элч',
+
+  // Construction / Trades
+  'Carpenter':                'Мужаан',
+  'Electrician':              'Цахилгаанч',
+  'Plumber':                  'Дулааны / Усны техникч',
+  'Site Manager':             'Барилгын талбайн менежер',
+  'Labourer':                 'Гараар ажиллагч',
+  'Estimator / Quantity Surveyor': 'Тооцоологч / Хэмжигч',
+
+  // Food Service / Hospitality
+  'Chef / Cook':              'Тогооч',
+  'Server / Waiter':          'Зөлгөч / Официант',
+  'Bartender':                'Барменч',
+  'Hotel / Front Desk Staff': 'Зочид буудлын хүлээн авагч',
+  'Kitchen Manager':          'Гал тогооны менежер',
+  'Event Staff':              'Арга хэмжээний ажилтан',
+
+  // Administrative / Office
+  'Administrative Assistant': 'Захиргааны туслах',
+  'Office Manager':           'Оффисын менежер',
+  'Receptionist':             'Хүлээн авагч',
+  'Data Entry Clerk':         'Өгөгдөл оруулагч',
+  'Executive Assistant':      'Гүйцэтгэх захирлын туслах',
+  'Operations Coordinator':   'Үйл ажиллагааны зохицуулагч',
+
+  // Marketing / Media
+  'Marketing Manager':            'Маркетингийн менежер',
+  'Content Writer / Copywriter':  'Агуулга бичигч / Копирайтер',
+  'Social Media Manager':         'Сошиал медиа менежер',
+  'Graphic Designer':             'График дизайнер',
+  'SEO Specialist':               'SEO мэргэжилтэн',
+  'PR / Communications Manager':  'PR / Харилцааны менежер',
+
+  // Legal / Law
+  'Paralegal':                'Хуулийн туслах',
+  'Legal Secretary':          'Хуулийн нарийн бичгийн дарга',
+  'Compliance Officer':       'Дагаж мөрдөлтийн ажилтан',
+  'Legal Assistant':          'Хуулийн туслах ажилтан',
+  'Court Reporter':           'Шүүхийн тайлагч',
+
+  // Agriculture
+  'Farm Worker':              'Фермийн ажилчин',
+  'Agricultural Manager':     'Хөдөө аж ахуйн менежер',
+  'Equipment Operator':       'Тоног төхөөрөмж ажиллуулагч',
+  'Agronomist':               'Агрономч',
+  'Livestock Worker':         'Мал аж ахуйн ажилчин',
+
+  // Arts / Design
+  'Illustrator / Artist':     'Зураач / Уран бүтээлч',
+  'Photographer':             'Гэрэл зурагч',
+  'Video Editor':             'Видео засварлагч',
+  'Art Director':             'Урлагийн захирал',
+  'Animator':                 'Анимацийн зураач',
+
+  // Engineering
+  'Civil Engineer':           'Иргэний инженер',
+  'Mechanical Engineer':      'Механик инженер',
+  'Electrical Engineer':      'Цахилгааны инженер',
+  'Project Engineer':         'Төслийн инженер',
+  'Technician':               'Техникч',
+  'CAD Designer':             'CAD дизайнер',
+
+  // Government / Public Service
+  'Government Officer':               'Засгийн газрын ажилтан',
+  'Policy Analyst':                   'Бодлогын аналист',
+  'Public Administrator':             'Нийтийн администратор',
+  'Inspector / Enforcement Officer':  'Хяналт / Хэрэгжүүлэлтийн ажилтан',
+  'Social Worker':                    'Нийгмийн ажилтан',
+
+  // Non-profit / Social Work
+  'Program Coordinator':          'Програмын зохицуулагч',
+  'Case Manager':                 'Хэргийн менежер',
+  'Community Outreach Worker':    'Нийгэмлэгийн ажилтан',
+  'Grant Writer':                 'Грант бичигч',
+  'Volunteer Manager':            'Сайн дурынханы менежер',
 }
 
 // ─── English templates for scoring engine reason builders ────────────────────

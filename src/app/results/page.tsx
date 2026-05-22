@@ -6,6 +6,11 @@ import { useRouter } from 'next/navigation'
 import { calculateMatches, CareerMatch } from '@/lib/scoringEngine'
 import { LanguageToggle } from '@/components/LanguageToggle'
 import { useLang } from '@/contexts/LanguageContext'
+import {
+  jobTitleAutomationRisk, taskAutomationRisk, skillSafety,
+  careerAiResistance, getRiskLevel, riskColors, riskBg, riskBarColor,
+  getDisplacementStory,
+} from '@/lib/automationData'
 
 type Answers = Record<string, string | string[]>
 
@@ -253,6 +258,21 @@ function MatchCard({ match, rank, delay, country, showJobs, unlocked }: { match:
           </div>
         </div>
 
+        {/* AI-resistance badge */}
+        {(() => {
+          const resistance = careerAiResistance[match.title]
+          if (!resistance) return null
+          const lvl = getRiskLevel(100 - resistance) // invert: low automation = safe career
+          const shieldColor = resistance >= 70 ? 'text-green-400' : resistance >= 55 ? 'text-yellow-400' : 'text-orange-400'
+          const shieldBg    = resistance >= 70 ? 'bg-green-500/10 border-green-500/20' : resistance >= 55 ? 'bg-yellow-500/10 border-yellow-500/20' : 'bg-orange-500/10 border-orange-500/20'
+          return (
+            <div className={`inline-flex items-center gap-1.5 mt-3 px-3 py-1 rounded-full border text-xs ${shieldBg} ${shieldColor}`}>
+              <span>🛡️</span>
+              <span>{resistance}% {t('AI-resistant')}</span>
+            </div>
+          )
+        })()}
+
         <p className="text-xs text-gray-600 text-center mt-3">
           {expanded ? t('▲ Less') : t('▼ Why this fits you')}
         </p>
@@ -424,6 +444,136 @@ function EmailSection({ matches, name, t }: { matches: CareerMatch[]; name: stri
   )
 }
 
+// ─── Threat assessment ────────────────────────────────────────────────────────
+
+function ThreatAssessment({ answers }: { answers: Answers }) {
+  const [expanded, setExpanded] = useState(false)
+  const { lang, t } = useLang()
+
+  const jobTitle  = (answers.jobTitle  as string) || 'Other'
+  const tasks     = (answers.dailyTasks as string[]) || []
+  const skills    = (answers.skills    as string[]) || []
+
+  const jobRisk    = jobTitleAutomationRisk[jobTitle] ?? 59
+  const riskLevel  = getRiskLevel(jobRisk)
+  const story      = getDisplacementStory(jobTitle, lang)
+
+  // Tasks sorted worst-first
+  const rankedTasks = tasks
+    .map((tk) => ({ label: tk, risk: taskAutomationRisk[tk] ?? 50 }))
+    .sort((a, b) => b.risk - a.risk)
+  const atRiskTasks = rankedTasks.filter((tk) => tk.risk >= 60).slice(0, 4)
+
+  // User's safest skills
+  const safeUserSkills = skills
+    .map((s) => ({ label: s, safety: skillSafety[s] ?? 50 }))
+    .filter((s) => s.safety >= 60)
+    .sort((a, b) => b.safety - a.safety)
+    .slice(0, 4)
+
+  const riskLabelMap: Record<string, string> = {
+    critical: t('Critical automation risk'),
+    high:     t('High automation risk'),
+    moderate: t('Moderate automation risk'),
+    low:      t('Lower automation risk'),
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className={`border rounded-3xl p-5 mb-8 ${riskBg[riskLevel]}`}
+    >
+      <p className="text-xs text-gray-500 uppercase tracking-widest mb-3">{t('The honest picture')}</p>
+
+      {/* Risk bar */}
+      <div className="mb-5">
+        <div className="flex items-end justify-between mb-1.5">
+          <p className="text-white font-semibold text-lg">{t(jobTitle)}</p>
+          <span className={`text-3xl font-bold ${riskColors[riskLevel]}`}>{jobRisk}%</span>
+        </div>
+        <div className="w-full h-2.5 bg-gray-800 rounded-full overflow-hidden mb-1.5">
+          <motion.div
+            className={`h-full rounded-full ${riskBarColor[riskLevel]}`}
+            initial={{ width: 0 }}
+            animate={{ width: `${jobRisk}%` }}
+            transition={{ duration: 1.2, ease: 'easeOut' }}
+          />
+        </div>
+        <p className={`text-xs font-medium ${riskColors[riskLevel]}`}>
+          {riskLabelMap[riskLevel]} — {jobRisk}% {t('of tasks in this role are being automated')}
+        </p>
+      </div>
+
+      {/* Why — specific technology */}
+      <div className="mb-5">
+        <p className="text-xs text-gray-600 uppercase tracking-widest mb-2">{t("Why it's happening")}</p>
+        <p className="text-sm text-gray-300 leading-relaxed">{story.why}</p>
+      </div>
+
+      {/* At-risk tasks from user's answers */}
+      {atRiskTasks.length > 0 && (
+        <div className="mb-5">
+          <p className="text-xs text-gray-600 uppercase tracking-widest mb-2">{t('Your tasks being replaced')}</p>
+          <div className="flex flex-col gap-1.5">
+            {atRiskTasks.map((tk) => (
+              <div key={tk.label} className="flex items-center justify-between">
+                <span className="text-sm text-gray-400">{t(tk.label)}</span>
+                <span className={`text-xs font-semibold ${riskColors[getRiskLevel(tk.risk)]}`}>{tk.risk}%</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="border-t border-gray-700/40 my-4" />
+
+      {/* What survives */}
+      <div className="mb-5">
+        <p className="text-xs text-gray-600 uppercase tracking-widest mb-2">{t("What machines still can't take from you")}</p>
+        <p className="text-sm text-gray-300 leading-relaxed mb-3">{story.survives}</p>
+        {safeUserSkills.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {safeUserSkills.map((s) => (
+              <span key={s.label} className="px-3 py-1 bg-green-500/10 border border-green-500/30 rounded-full text-xs text-green-400">
+                {t(s.label)}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* The one thing to add */}
+      <div className="mb-5 bg-[#0d0f14]/60 rounded-2xl p-4">
+        <p className="text-xs text-gray-600 uppercase tracking-widest mb-1.5">{t('The one thing to add')}</p>
+        <p className="text-sm text-white leading-relaxed">{story.add}</p>
+      </div>
+
+      {/* Transition story — collapsed by default */}
+      <button onClick={() => setExpanded((e) => !e)} className="w-full text-left">
+        <p className="text-xs text-gray-500 uppercase tracking-widest mb-2 flex items-center gap-2">
+          {t('Someone who made this jump')}
+          <span className="text-gray-600">{expanded ? '▲' : '▼'}</span>
+        </p>
+      </button>
+
+      {expanded && (
+        <motion.div
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-[#0d0f14]/60 rounded-2xl p-4"
+        >
+          <p className="text-sm font-medium text-white mb-0.5">{story.story.person}</p>
+          <p className="text-xs text-orange-400 mb-3">{story.story.path}</p>
+          <p className="text-sm text-gray-400 leading-relaxed mb-2">{story.story.how}</p>
+          <p className="text-sm text-green-400 font-medium">{story.story.win}</p>
+        </motion.div>
+      )}
+    </motion.div>
+  )
+}
+
 // ─── Horizontal scroll cards ──────────────────────────────────────────────────
 
 function CarouselCards({ matches, country, unlocked }: { matches: CareerMatch[]; country: string; unlocked: boolean }) {
@@ -459,19 +609,21 @@ function CarouselCards({ matches, country, unlocked }: { matches: CareerMatch[];
 
 export default function ResultsPage() {
   const router = useRouter()
-  const [matches, setMatches] = useState<CareerMatch[]>([])
-  const [name, setName] = useState('You')
-  const [country, setCountry] = useState('')
+  const [matches, setMatches]   = useState<CareerMatch[]>([])
+  const [answers, setAnswers]   = useState<Answers>({})
+  const [name, setName]         = useState('You')
+  const [country, setCountry]   = useState('')
   const [unlocked, setUnlocked] = useState(false)
   const { lang, t } = useLang()
 
   useEffect(() => {
     const raw = sessionStorage.getItem('grh_answers')
     if (!raw) { router.push('/'); return }
-    const answers: Answers = JSON.parse(raw)
-    setName((answers.firstName as string) || 'You')
-    setCountry((answers.country as string) || '')
-    setMatches(calculateMatches(answers, lang))
+    const parsed: Answers = JSON.parse(raw)
+    setAnswers(parsed)
+    setName((parsed.firstName as string) || 'You')
+    setCountry((parsed.country as string) || '')
+    setMatches(calculateMatches(parsed, lang))
   }, [lang])
 
   if (matches.length === 0) return null
@@ -496,10 +648,16 @@ export default function ResultsPage() {
         >
           <p className="text-xs text-orange-500 uppercase tracking-widest font-medium mb-2">{t('Results')}</p>
           <h1 className="text-3xl font-light text-white mb-2">
-            {name}<span className="text-orange-400 font-medium">{t("'s Career Matches")}</span>
+            {name}<span className="text-orange-400 font-medium">{t("'s Escape Plan")}</span>
           </h1>
-          <p className="text-sm text-gray-500">{t('Ranked by compatibility · Live roles included')}</p>
+          <p className="text-sm text-gray-500">{t("Here's where you stand — and where you can go")}</p>
+
         </motion.div>
+
+        {/* Threat assessment — shown when we have enough data */}
+        {answers.jobTitle && (
+          <ThreatAssessment answers={answers} />
+        )}
 
         {/* Free matches — cover flow carousel */}
         <CarouselCards matches={free} country={country} unlocked={unlocked} />
