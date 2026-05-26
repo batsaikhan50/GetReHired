@@ -159,7 +159,7 @@ const mn: Record<string, string> = {
   'Your customer-facing experience is exactly what they want':
     'Харилцагчтай ажилласан туршлага нь яг тэдний хайж буй зүйл',
   'Clear progression path to Account Manager or VP of Customer Success':
-    'Account Manager эсвэл VP хүртэлх тодорхой ажилын зам',
+    'Account Manager эсвэл VP хүртэлх тодорхой ажлын зам',
   'Fastest hiring cycle of any office role — companies always need salespeople':
     'Борлуулалтын ажилтнуудыг компаниуд үргэлж хэрэгтэй байдаг',
   'Commission structures mean your income is controlled by you':
@@ -199,7 +199,7 @@ const mn: Record<string, string> = {
   'Every brand needs this — demand only grows':
     'Аливаа брэнд энэ хэрэгтэй — эрэлт л өсч байна',
   'Entry point to a full digital marketing career':
-    'Бүрэн дижитал маркетингийн ажилын орох цэг',
+    'Бүрэн дижитал маркетингийн ажлын орох цэг',
   'Remote-friendly and often freelance-compatible':
     'Алсаас ажиллах боломжтой, фриланстай нийцтэй',
   'Your real-world experience is more valuable than a teaching degree here':
@@ -213,9 +213,9 @@ const mn: Record<string, string> = {
   'AI cannot replace the human judgment this role requires':
     'AI энэ үүргийн шаарддаг хүний дүгнэлтийг орлож чадахгүй',
   'CompTIA Security+ cert opens the door with no degree required':
-    'CompTIA Security+ гэрчилгээ диплом шаардлагагүйгээр хаалга нэдэддэг',
+    'CompTIA Security+ гэрчилгээ диплом шаардлагагүйгээр хаалга нээдэг',
   'Software development remains one of the highest-paid fields globally':
-    'Програм хөгжүүлэлт дэлхийд хамгийн өндөр цалинтай салбаруудын нэг хэвээр байна',
+    'Программ хөгжүүлэлт дэлхийд хамгийн өндөр цалинтай салбаруудын нэг хэвээр байна',
   'Remote-first — most dev jobs never require an office':
     'Алсаас ажиллах боломжтой — ихэнх хөгжүүлэгчийн ажил оффис шаарддаггүй',
   'AI tools assist developers but have not replaced them':
@@ -264,7 +264,7 @@ const mn: Record<string, string> = {
 
   // ── Results page ─────────────────────────────────────────────────────────────
   'Results':              'Үр дүн',
-  "'s Career Matches":    '-н ажилын тохирлууд',
+  "'s Career Matches":    '-н ажлын тохирлууд',
   "'s Escape Plan":       '-н гарах зам',
   'Ranked by compatibility · Live roles included':
     'Нийцлээр эрэмбэлэгдсэн · Бодит ажлын байрууд',
@@ -309,7 +309,7 @@ const mn: Record<string, string> = {
   'Something went wrong. Try again.':  'Алдаа гарлаа. Дахин оролдоно уу.',
   'Unlock to reveal':                'Нэгдэх',
   'See every career path ranked for you — plus skills roadmap, salary insights, and live job listings for each.':
-    'Таны хувьд эрэмбэлэгдсэн бүх ажилын замыг харах — ур чадварын зам, цалингийн мэдээлэл, бодит ажлын байрууд.',
+    'Таны хувьд эрэмбэлэгдсэн бүх ажлын замыг харах — ур чадварын зам, цалингийн мэдээлэл, бодит ажлын байрууд.',
   'Match':                'Тохирол',
   '#':                    '#',
 
@@ -436,11 +436,11 @@ const mn: Record<string, string> = {
   '📈 Data analysis & reports': '📈 Өгөгдөл шинжилгээ',
   '✍️ Clear writing':         '✍️ Тодорхой бичих',
   '🎨 Graphic design':        '🎨 График дизайн',
-  '🖥️ CRM software':          '🖥️ CRM програм',
+  '🖥️ CRM software':          '🖥️ CRM программ',
   '🚗 Licensed driving':      '🚗 Жолооны үнэмлэхтэй',
   '🏥 Medical procedures':    '🏥 Эмнэлгийн процедур',
   '🎓 Teaching & training':   '🎓 Заах, сургах',
-  '💻 Programming & coding':  '💻 Програмчлал',
+  '💻 Programming & coding':  '💻 Программчлал',
   '🤝 Sales & persuasion':    '🤝 Борлуулалт, ятгах',
   '💪 Physical labor':        '💪 Биеийн хөдөлмөр',
   '💰 Budgeting & finance':   '💰 Төсөв, санхүү',
@@ -452,8 +452,8 @@ const mn: Record<string, string> = {
   // Tool options (short)
   '📄 Microsoft Office':                      '📄 Microsoft Office',
   '☁️ Google Workspace':                      '☁️ Google Workspace',
-  '🔗 CRM software (Salesforce, HubSpot)':    '🔗 CRM програм (Salesforce, HubSpot)',
-  '🧾 Accounting software (QuickBooks, SAP)': '🧾 Нягтлан бодох програм',
+  '🔗 CRM software (Salesforce, HubSpot)':    '🔗 CRM программ (Salesforce, HubSpot)',
+  '🧾 Accounting software (QuickBooks, SAP)': '🧾 Нягтлан бодох программ',
   '🎨 Design tools (Canva, Figma, Photoshop)':'🎨 Дизайны хэрэгсэл (Canva, Figma)',
   '📦 Warehouse / inventory systems':         '📦 Агуулахын систем',
   '🖥️ POS / cash register':                   '🖥️ POS / кассын систем',
@@ -623,7 +623,7 @@ const mn: Record<string, string> = {
 
   // Food Service / Hospitality
   'Chef / Cook':              'Тогооч',
-  'Server / Waiter':          'Зөлгөч / Официант',
+  'Server / Waiter':          'Үйлчлэгч / Официант',
   'Bartender':                'Барменч',
   'Hotel / Front Desk Staff': 'Зочид буудлын хүлээн авагч',
   'Kitchen Manager':          'Гал тогооны менежер',
@@ -682,11 +682,11 @@ const mn: Record<string, string> = {
   'Social Worker':                    'Нийгмийн ажилтан',
 
   // Non-profit / Social Work
-  'Program Coordinator':          'Програмын зохицуулагч',
+  'Program Coordinator':          'Программын зохицуулагч',
   'Case Manager':                 'Хэргийн менежер',
   'Community Outreach Worker':    'Нийгэмлэгийн ажилтан',
   'Grant Writer':                 'Грант бичигч',
-  'Volunteer Manager':            'Сайн дурынханы менежер',
+  'Volunteer Manager':            'Сайн дурынхны менежер',
 }
 
 // ─── English templates for scoring engine reason builders ────────────────────
