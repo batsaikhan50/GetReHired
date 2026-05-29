@@ -23,10 +23,9 @@ export function SiteNav() {
     <header className="fixed top-0 inset-x-0 z-50 bg-[#0d0f14]/80 backdrop-blur-md border-b border-gray-800/60">
       <nav className="max-w-6xl mx-auto flex items-center justify-between px-4 sm:px-6 h-16">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <span className="text-lg font-semibold text-white tracking-tight">
-            GetRe<span className="text-orange-400">Hired</span>
-          </span>
+        <Link href="/" className="flex items-baseline gap-1 group">
+          <span className="text-lg font-semibold text-white tracking-tight">GetRe</span>
+          <span className="font-doodle text-2xl text-orange-400 leading-none">Hired</span>
         </Link>
 
         {/* Desktop links */}
@@ -43,7 +42,7 @@ export function SiteNav() {
           <LanguageToggle />
           <Link
             href="/assessment"
-            className="px-4 py-2 bg-orange-500 hover:bg-orange-400 text-white text-sm font-medium rounded-full transition-all hover:scale-[1.03]"
+            className="px-4 py-2 bg-orange-500 hover:bg-orange-400 text-white text-sm font-medium rough-border border-orange-300 transition-all hover:scale-[1.03]"
           >
             {t('Start Free')}
           </Link>

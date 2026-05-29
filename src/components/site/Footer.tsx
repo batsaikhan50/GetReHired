@@ -31,8 +31,9 @@ export function Footer() {
         <div className="flex flex-col md:flex-row md:justify-between gap-10">
           {/* Brand */}
           <div className="max-w-xs">
-            <Link href="/" className="text-lg font-semibold text-white tracking-tight">
-              GetRe<span className="text-orange-400">Hired</span>
+            <Link href="/" className="inline-flex items-baseline gap-1">
+              <span className="text-lg font-semibold text-white tracking-tight">GetRe</span>
+              <span className="font-doodle text-2xl text-orange-400 leading-none">Hired</span>
             </Link>
             <p className="mt-3 text-sm text-gray-500 leading-relaxed">
               {t('Find your next career after AI. Built for people whose jobs changed.')}

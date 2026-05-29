@@ -28,13 +28,13 @@ export default function Error({
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <button
             onClick={() => unstable_retry()}
-            className="px-6 py-3 bg-orange-500 hover:bg-orange-400 text-white text-sm font-medium rounded-full transition-all hover:scale-[1.03]"
+            className="px-6 py-3 bg-orange-500 hover:bg-orange-400 text-white text-sm font-medium rough-border border-orange-300 transition-all hover:scale-[1.03]"
           >
             Try again
           </button>
           <a
             href="/"
-            className="px-6 py-3 border border-gray-700 hover:border-gray-500 text-gray-300 text-sm font-medium rounded-full transition-colors"
+            className="px-6 py-3 border-gray-600 hover:border-gray-400 text-gray-300 text-sm font-medium rough-border-2 transition-colors"
           >
             Back to home
           </a>

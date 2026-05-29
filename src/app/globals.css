@@ -19,6 +19,7 @@
   --color-muted: var(--muted);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-doodle: var(--font-caveat);
 }
 
 html, body {
@@ -36,4 +37,65 @@ html, body {
 ::selection {
   background: var(--accent);
   color: #fff;
+}
+
+/* ─── Doodle design system ──────────────────────────────────────────────────── */
+
+/* Handwritten display font helper */
+.font-doodle {
+  font-family: var(--font-caveat), "Comic Sans MS", cursive;
+  letter-spacing: 0.01em;
+}
+
+/* Hand-drawn irregular borders — uneven corner radii fake a sketched box.
+   Three variants so repeated cards don't look mechanically identical. */
+.rough-border {
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+}
+.rough-border-2 {
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 15px 225px 15px 255px / 225px 15px 255px 15px;
+}
+.rough-border-3 {
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 200px 12px 250px 18px / 18px 200px 14px 240px;
+}
+
+/* Marker-pen highlight behind inline text. Uses currentColor-ish orange wash. */
+.marker {
+  background-image: linear-gradient(
+    104deg,
+    transparent 0.5%,
+    rgba(249, 115, 22, 0.32) 1.8%,
+    rgba(249, 115, 22, 0.32) 97.8%,
+    transparent 99%
+  );
+  padding: 0.05em 0.18em;
+  border-radius: 0.2em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Subtle dotted-grid "notebook" backdrop for sections. */
+.doodle-grid {
+  background-image: radial-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Gentle hand-wobble for accent doodles. */
+@keyframes doodle-wobble {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+.doodle-wobble {
+  animation: doodle-wobble 4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .doodle-wobble { animation: none; }
 }

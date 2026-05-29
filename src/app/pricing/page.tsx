@@ -2,7 +2,9 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { Check, ArrowRight, Coffee } from 'lucide-react'
 import { MarketingShell } from '@/components/site/MarketingShell'
+import { Star, Sparkle, DoodleUnderline, Arrow } from '@/components/doodle/Doodles'
 
 const FREE = [
   'Full career assessment',
@@ -45,13 +47,20 @@ export default function PricingPage() {
   return (
     <MarketingShell>
       {/* Hero */}
-      <section className="max-w-3xl mx-auto px-4 sm:px-6 pt-16 pb-8 text-center relative">
+      <section className="relative max-w-3xl mx-auto px-4 sm:px-6 pt-16 pb-8 text-center doodle-grid">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] rounded-full bg-orange-500/5 blur-[120px] pointer-events-none" />
-        <p className="text-xs text-orange-500 uppercase tracking-widest font-medium mb-3 relative">Pricing</p>
-        <h1 className="text-3xl sm:text-4xl font-light text-white mb-4 relative">
-          Start free. Unlock everything for the price of a coffee.
+        <Sparkle className="hidden sm:block absolute top-12 left-8 w-5 h-5 text-orange-300/50" />
+        <Star className="hidden sm:block absolute bottom-2 right-10 w-6 h-6 text-orange-400/60 doodle-wobble" />
+
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-5 rounded-full border border-orange-500/40 bg-orange-500/10 relative">
+          <Coffee className="w-4 h-4 text-orange-400" />
+          <span className="text-xs text-orange-300 font-medium tracking-wide">Pricing</span>
+        </div>
+        <h1 className="text-3xl sm:text-4xl font-light text-white mb-4 relative leading-snug">
+          Start free. Unlock everything for{' '}
+          <DoodleUnderline className="text-orange-400 font-normal">the price of a coffee.</DoodleUnderline>
         </h1>
-        <p className="text-gray-400 max-w-lg mx-auto relative">
+        <p className="text-gray-400 max-w-lg mx-auto relative mt-6">
           No subscription. No hidden fees. Try the whole assessment before you decide.
         </p>
       </section>
@@ -60,23 +69,23 @@ export default function PricingPage() {
       <section className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
         <div className="grid gap-5 md:grid-cols-2">
           {/* Free */}
-          <div className="bg-[#161b25] border border-gray-800 rounded-3xl p-7 flex flex-col">
+          <div className="bg-[#161b25] border-gray-700 rough-border p-7 flex flex-col">
             <h2 className="text-lg font-medium text-white">Free</h2>
             <p className="text-sm text-gray-500 mt-1">See where you stand.</p>
             <p className="mt-5 mb-6">
-              <span className="text-4xl font-light text-white">$0</span>
+              <span className="text-5xl font-doodle text-white">$0</span>
             </p>
             <ul className="space-y-3 flex-1">
               {FREE.map((f) => (
                 <li key={f} className="flex items-start gap-2.5 text-sm text-gray-300">
-                  <span className="text-orange-400 mt-0.5">✓</span>
+                  <Check className="w-4 h-4 text-orange-400 mt-0.5 shrink-0" />
                   {f}
                 </li>
               ))}
             </ul>
             <Link
               href="/assessment"
-              className="mt-7 py-3 border border-gray-700 hover:border-gray-500 text-gray-200 text-sm font-medium rounded-full text-center transition-colors"
+              className="mt-7 py-3 border-gray-600 hover:border-gray-400 text-gray-200 text-sm font-medium rough-border-2 text-center transition-colors"
             >
               Start the assessment
             </Link>
@@ -86,15 +95,15 @@ export default function PricingPage() {
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            className="relative bg-gradient-to-b from-orange-500/10 to-[#161b25] border border-orange-500/40 rounded-3xl p-7 flex flex-col"
+            className="relative bg-gradient-to-b from-orange-500/10 to-[#161b25] border-orange-500/50 rough-border-3 p-7 flex flex-col"
           >
-            <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-orange-500 text-white text-xs font-medium rounded-full">
-              Most popular
+            <span className="absolute -top-4 left-1/2 -translate-x-1/2 px-3 py-1 bg-orange-500 text-white text-xs font-medium rounded-full flex items-center gap-1">
+              <Star className="w-3 h-3" /> Most popular
             </span>
             <h2 className="text-lg font-medium text-white">Full Results</h2>
             <p className="text-sm text-gray-500 mt-1">The complete escape plan.</p>
             <p className="mt-5 mb-6 flex items-baseline gap-2">
-              <span className="text-4xl font-light text-white">$5</span>
+              <span className="text-5xl font-doodle text-orange-300">$5</span>
               <span className="text-sm text-gray-500">one-time</span>
             </p>
             <ul className="space-y-3 flex-1">
@@ -103,16 +112,17 @@ export default function PricingPage() {
                   key={f}
                   className={`flex items-start gap-2.5 text-sm ${i === 0 ? 'text-gray-500' : 'text-gray-200'}`}
                 >
-                  {i !== 0 && <span className="text-orange-400 mt-0.5">✓</span>}
+                  {i !== 0 && <Check className="w-4 h-4 text-orange-400 mt-0.5 shrink-0" />}
                   {f}
                 </li>
               ))}
             </ul>
             <Link
               href="/assessment"
-              className="mt-7 py-3 bg-orange-500 hover:bg-orange-400 text-white text-sm font-medium rounded-full text-center transition-all hover:scale-[1.02] shadow-lg shadow-orange-500/25"
+              className="mt-7 py-3 bg-orange-500 hover:bg-orange-400 text-white text-sm font-medium rough-border border-orange-300 text-center transition-all hover:scale-[1.02] shadow-lg shadow-orange-500/25 flex items-center justify-center gap-2"
             >
               Start free, unlock at the end
+              <ArrowRight className="w-4 h-4" />
             </Link>
             <p className="text-xs text-gray-600 mt-3 text-center">You only pay after you see your top matches.</p>
           </motion.div>
@@ -120,11 +130,14 @@ export default function PricingPage() {
       </section>
 
       {/* FAQ */}
-      <section className="max-w-2xl mx-auto px-4 sm:px-6 py-14">
-        <h2 className="text-2xl font-light text-white mb-8 text-center">Common questions</h2>
+      <section className="relative max-w-2xl mx-auto px-4 sm:px-6 py-14">
+        <Arrow className="hidden sm:block absolute -left-4 top-10 w-10 h-10 text-orange-400/40" />
+        <h2 className="text-2xl font-light text-white mb-8 text-center">
+          Common <span className="font-doodle text-orange-300 text-3xl">questions</span>
+        </h2>
         <div className="space-y-5">
-          {FAQ.map((item) => (
-            <div key={item.q} className="bg-[#161b25] border border-gray-800 rounded-2xl p-5">
+          {FAQ.map((item, i) => (
+            <div key={item.q} className={`bg-[#161b25] border-gray-700 p-5 ${i % 2 === 0 ? 'rough-border' : 'rough-border-2'}`}>
               <h3 className="text-white font-medium mb-2">{item.q}</h3>
               <p className="text-sm text-gray-400 leading-relaxed">{item.a}</p>
             </div>
