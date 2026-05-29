@@ -8,7 +8,7 @@ import { useLang } from '@/contexts/LanguageContext'
 const stepKeys = [
   { key: 'Reading your work history',       duration: 1000 },
   { key: 'Mapping your tasks and skills',   duration: 1200 },
-  { key: 'Scoring 13 career paths',         duration: 1400 },
+  { key: 'Scoring 30 career paths',         duration: 1400 },
   { key: 'Calculating task overlap',        duration: 1200 },
   { key: 'Ranking your matches',            duration: 1000 },
   { key: 'Your results are ready',          duration: 800  },

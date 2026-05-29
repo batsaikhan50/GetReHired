@@ -15,7 +15,7 @@ const WEIGHTS = [
 
 const STEPS = [
   { n: 1, title: 'You answer ~25 quick questions', body: 'No résumé, no jargon. Just what you actually did, what you’re good at, and what you want next.' },
-  { n: 2, title: 'We score 13 career paths against you', body: 'Every path is matched on overlap with your real tasks, skills, and tools — not personality guesswork.' },
+  { n: 2, title: 'We score 30 career paths against you', body: 'Every path is matched on overlap with your real tasks, skills, and tools — not personality guesswork.' },
   { n: 3, title: 'You get ranked matches + a plan', body: 'Each match shows why it fits, the salary range, time-to-hire, the exact skills to build, and live job openings.' },
 ]
 

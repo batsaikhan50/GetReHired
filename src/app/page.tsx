@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { MarketingShell } from '@/components/site/MarketingShell'
 
 const STATS = [
-  { value: '13', label: 'career paths scored' },
+  { value: '30', label: 'career paths scored' },
   { value: '~15 min', label: 'to your results' },
   { value: '$0', label: 'to start' },
 ]

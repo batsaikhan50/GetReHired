@@ -79,7 +79,7 @@ const mn: Record<string, string> = {
   // ── Calculating page ─────────────────────────────────────────────────────────
   'Reading your work history':       'Ажлын түүх уншиж байна',
   'Mapping your tasks and skills':   'Даалгавар, ур чадвар тодорхойлж байна',
-  'Scoring 13 career paths':         '13 төрлийн ажлын байр оноож байна',
+  'Scoring 30 career paths':         '30 төрлийн ажлын байр оноож байна',
   'Calculating task overlap':        'Давхцалыг тооцоолж байна',
   'Ranking your matches':            'Тохирлыг эрэмбэлж байна',
   'Your results are ready':          'Таны үр дүн бэлэн боллоо',

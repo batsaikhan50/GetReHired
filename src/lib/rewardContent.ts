@@ -61,7 +61,7 @@ export function getRewardContent(blockId: number, answers: Answers): RewardConte
       stats: [
         { value: '4/5',  label: 'blocks done' },
         { value: '< 1',  label: 'min left' },
-        { value: '13',   label: 'careers to score' },
+        { value: '30',   label: 'careers to score' },
       ],
       message: `Your work preferences are set. Last block: your edge and what makes you stand out. This is what separates a 60% match from a 90% match.`,
       teaser: 'Next: your edge...',
@@ -73,7 +73,7 @@ export function getRewardContent(blockId: number, answers: Answers): RewardConte
       headline: '✨ Profile complete.',
       stats: [
         { value: String(dailyTasks.length + skills.length + tools.length), label: 'data points collected' },
-        { value: '13',   label: 'career paths scored' },
+        { value: '30',   label: 'career paths scored' },
         { value: 'Now',  label: 'matches ready' },
       ],
       message: `Every match was calculated from your actual work history — your tasks, your skills, your tools. This is not a generic result. It is built specifically for you, ${name}.`,

@@ -14,7 +14,7 @@ const FREE = [
 
 const PAID = [
   'Everything in Free, plus:',
-  'All 13 ranked career matches',
+  'All 30 ranked career matches',
   'Salary range for every match',
   'Time-to-hire estimates',
   'Personalized skills roadmap',
