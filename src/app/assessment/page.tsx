@@ -117,7 +117,7 @@ function QuestionCardContent({
           <button onClick={onBack} className="text-sm text-gray-500 hover:text-gray-300 transition-colors">{t('← Back')}</button>
           <button
             onClick={onNext} disabled={!canNext}
-            className="px-8 py-3 bg-orange-500 hover:bg-orange-400 disabled:bg-gray-800 disabled:text-gray-600 text-white font-medium rounded-full transition-all hover:scale-105 disabled:hover:scale-100"
+            className="px-8 py-3 bg-orange-500 hover:bg-orange-400 disabled:bg-gray-800 disabled:text-gray-600 text-white font-medium rough-border border-orange-300 transition-all hover:scale-105 disabled:hover:scale-100"
           >{t('Continue →')}</button>
         </div>
       )}
@@ -152,9 +152,9 @@ function RewardBottomSheet({ blockId, answers, onContinue, t }: {
       {/* Stats pills */}
       <div className="flex gap-2 flex-wrap justify-center mb-4">
         {c.stats.map((s, i) => (
-          <div key={i} className="px-3 py-2 bg-gray-800 rounded-xl text-center min-w-[80px]">
-            <div className="text-sm font-semibold text-orange-400">{s.value}</div>
-            <div className="text-xs text-gray-400 leading-snug">{s.label}</div>
+          <div key={i} className="px-3 py-2 bg-gray-800 rough-border-2 border-gray-700 text-center min-w-[80px]">
+            <div className="font-doodle text-2xl text-orange-400 leading-none">{s.value}</div>
+            <div className="text-xs text-gray-400 leading-snug mt-0.5">{s.label}</div>
           </div>
         ))}
       </div>
@@ -164,7 +164,7 @@ function RewardBottomSheet({ blockId, answers, onContinue, t }: {
 
       <button
         onClick={onContinue}
-        className="w-full mt-5 py-4 bg-orange-500 hover:bg-orange-400 text-white font-medium rounded-full transition-all hover:scale-[1.02]"
+        className="w-full mt-5 py-4 bg-orange-500 hover:bg-orange-400 text-white font-medium rough-border border-orange-300 transition-all hover:scale-[1.02]"
       >
         {isFinal ? t('🎯 See My Career Matches →') : t('Keep Going →')}
       </button>
@@ -397,7 +397,7 @@ export default function AssessmentPage() {
               initial={{ opacity: 0, y: 16, scale: 0.97 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 16, scale: 0.97 }}
-              className="w-full max-w-sm bg-[#161b25] border border-gray-800 rounded-3xl p-7 text-center"
+              className="w-full max-w-sm bg-[#161b25] border-gray-700 rough-border p-7 text-center"
             >
               <div className="text-4xl mb-4">👋</div>
               <h2 className="text-xl font-light text-white mb-2">{t('Welcome back')}</h2>
@@ -407,13 +407,13 @@ export default function AssessmentPage() {
               <div className="flex flex-col gap-2.5">
                 <button
                   onClick={continueResume}
-                  className="w-full py-3 bg-orange-500 hover:bg-orange-400 text-white font-medium rounded-full transition-all hover:scale-[1.02]"
+                  className="w-full py-3 bg-orange-500 hover:bg-orange-400 text-white font-medium rough-border border-orange-300 transition-all hover:scale-[1.02]"
                 >
                   {t('Continue')}
                 </button>
                 <button
                   onClick={startOver}
-                  className="w-full py-3 border border-gray-700 hover:border-gray-500 text-gray-300 text-sm rounded-full transition-colors"
+                  className="w-full py-3 border-gray-600 hover:border-gray-400 text-gray-300 text-sm rough-border-2 transition-colors"
                 >
                   {t('Start over')}
                 </button>
@@ -476,7 +476,7 @@ export default function AssessmentPage() {
               onClick={!isCurrent ? (offset < 0 ? handleBack : rightClickable ? () => setQuestionIdx(idx) : undefined) : undefined}
             >
               {/* Card box */}
-              <div className={`relative bg-[#161b25] border rounded-3xl p-6 flex flex-col ${
+              <div className={`relative bg-[#161b25] rough-border p-6 flex flex-col ${
                 isCurrent ? 'border-gray-700' : 'border-gray-800'
               }`}>
                 <div className={!isCurrent ? 'opacity-40' : ''}>

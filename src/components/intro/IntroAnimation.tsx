@@ -77,8 +77,10 @@ export default function IntroAnimation() {
             className="space-y-4"
           >
             <p
-              className={`text-2xl md:text-4xl font-light leading-tight tracking-tight ${
-                slide.highlight ? 'text-orange-400' : 'text-white'
+              className={`leading-tight tracking-tight ${
+                slide.highlight
+                  ? 'font-doodle text-4xl md:text-6xl text-orange-400'
+                  : 'text-2xl md:text-4xl font-light text-white'
               }`}
             >
               {slide.text}
@@ -97,7 +99,7 @@ export default function IntroAnimation() {
               >
                 <button
                   onClick={(e) => { e.stopPropagation(); handleStart() }}
-                  className="px-10 py-4 bg-orange-500 hover:bg-orange-400 text-white text-lg font-medium rounded-full transition-all duration-200 hover:scale-105 shadow-lg shadow-orange-500/20"
+                  className="px-10 py-4 bg-orange-500 hover:bg-orange-400 text-white text-lg font-medium rough-border border-orange-300 transition-all duration-200 hover:scale-105 shadow-lg shadow-orange-500/20"
                 >
                   {t('Start Your Journey →')}
                 </button>

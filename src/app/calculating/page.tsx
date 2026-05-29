@@ -3,7 +3,9 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/navigation'
+import { Brain, Check, PartyPopper } from 'lucide-react'
 import { useLang } from '@/contexts/LanguageContext'
+import { Star, Sparkle } from '@/components/doodle/Doodles'
 
 const stepKeys = [
   { key: 'Reading your work history',       duration: 1000 },
@@ -52,20 +54,27 @@ export default function CalculatingPage() {
   const isLast = stepIdx === stepKeys.length - 1
 
   return (
-    <div className="min-h-screen bg-[#0d0f14] flex flex-col items-center justify-center px-6 relative overflow-hidden">
+    <div className="min-h-screen bg-[#0d0f14] flex flex-col items-center justify-center px-6 relative overflow-hidden doodle-grid">
       {/* Ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-orange-500/5 blur-[140px] pointer-events-none" />
+      <Star className="absolute top-1/4 left-1/4 w-6 h-6 text-orange-400/40 doodle-wobble" />
+      <Sparkle className="absolute bottom-1/3 right-1/4 w-5 h-5 text-orange-300/40" />
 
       <div className="w-full max-w-sm relative z-10">
 
         {/* Icon */}
-        <motion.div
-          animate={{ rotate: done ? 0 : 360 }}
-          transition={{ duration: 3, repeat: done ? 0 : Infinity, ease: 'linear' }}
-          className="text-5xl text-center mb-10"
-        >
-          {done ? '✅' : '⚙️'}
-        </motion.div>
+        <div className="relative w-20 h-20 mx-auto mb-10">
+          <Sparkle className="absolute -top-1 -right-1 w-5 h-5 text-orange-300 doodle-wobble" />
+          <motion.div
+            animate={{ scale: done ? 1 : [1, 1.08, 1] }}
+            transition={{ duration: 1.4, repeat: done ? 0 : Infinity, ease: 'easeInOut' }}
+            className="w-20 h-20 rounded-full bg-orange-500/15 border-2 border-orange-500/40 flex items-center justify-center"
+          >
+            {done
+              ? <PartyPopper className="w-9 h-9 text-orange-400" />
+              : <Brain className="w-9 h-9 text-orange-400" />}
+          </motion.div>
+        </div>
 
         {/* Step label */}
         <div className="h-8 mb-6 overflow-hidden relative">
@@ -95,7 +104,7 @@ export default function CalculatingPage() {
         </div>
 
         {/* Percentage */}
-        <p className="text-center text-sm text-gray-600 mb-12">
+        <p className="text-center font-doodle text-3xl text-orange-300/80 mb-12">
           {Math.round(progress)}%
         </p>
 
@@ -109,7 +118,7 @@ export default function CalculatingPage() {
               transition={{ duration: 0.3 }}
               className="flex items-center gap-3"
             >
-              <span className="text-orange-500 text-sm">✓</span>
+              <Check className="w-4 h-4 text-orange-500" />
               <span className="text-sm text-gray-600">{t(s.key)}</span>
             </motion.div>
           ))}

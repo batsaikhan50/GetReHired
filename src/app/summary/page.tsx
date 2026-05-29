@@ -52,7 +52,7 @@ export default function SummaryPage() {
         >
           <p className="text-xs text-orange-500 uppercase tracking-widest font-medium mb-2">{t('Profile Complete')}</p>
           <h1 className="text-3xl font-light text-white mb-2">
-            {t('This is')} <span className="text-orange-400 font-medium">{name}.</span>
+            {t('This is')} <span className="font-doodle text-orange-400 text-5xl">{name}.</span>
           </h1>
           <p className="text-gray-500 text-sm">{t('Built from your actual work history — not a personality quiz.')}</p>
         </motion.div>
@@ -67,9 +67,9 @@ export default function SummaryPage() {
             { value: String(dailyTasks.length || '—'), label: t('Tasks Mapped') },
             { value: String(skills.length || '—'),     label: t('Skills Found') },
           ].map((s, i) => (
-            <div key={i} className="bg-gray-900/60 border border-gray-800 rounded-2xl py-3 text-center">
-              <div className="text-lg font-semibold text-orange-400">{s.value}</div>
-              <div className="text-xs text-gray-500">{s.label}</div>
+            <div key={i} className="bg-gray-900/60 border-gray-700 rough-border-2 py-3 text-center">
+              <div className="font-doodle text-3xl text-orange-400 leading-none">{s.value}</div>
+              <div className="text-xs text-gray-500 mt-1">{s.label}</div>
             </div>
           ))}
         </motion.div>
@@ -77,7 +77,7 @@ export default function SummaryPage() {
         {/* Main card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
-          className="bg-[#161b25] border border-gray-800 rounded-3xl overflow-hidden mb-4"
+          className="bg-[#161b25] border-gray-700 rough-border overflow-hidden mb-4"
         >
           {/* Background */}
           <div className="px-5 pt-5 pb-4 border-b border-gray-800/60">
@@ -180,7 +180,7 @@ export default function SummaryPage() {
         >
           <button
             onClick={() => router.push('/calculating')}
-            className="w-full py-4 bg-orange-500 hover:bg-orange-400 text-white font-medium rounded-full text-lg transition-all hover:scale-[1.02] shadow-lg shadow-orange-500/20"
+            className="w-full py-4 bg-orange-500 hover:bg-orange-400 text-white font-medium rough-border border-orange-300 text-lg transition-all hover:scale-[1.02] shadow-lg shadow-orange-500/20"
           >
             {t('Find My Career Matches →')}
           </button>

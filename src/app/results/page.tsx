@@ -210,7 +210,7 @@ function MatchCard({ match, rank, delay, country, showJobs, unlocked }: { match:
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.5 }}
-      className="bg-[#161b25] border border-gray-800 rounded-3xl overflow-hidden flex flex-col h-full"
+      className="bg-[#161b25] border-gray-700 rough-border overflow-hidden flex flex-col h-full"
     >
       {/* Header — fixed height so salary row always aligns across cards */}
       <div className="p-5 cursor-pointer" onClick={() => setExpanded((e) => !e)}>
@@ -240,7 +240,7 @@ function MatchCard({ match, rank, delay, country, showJobs, unlocked }: { match:
                 />
               </svg>
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-sm font-semibold text-orange-400">{match.score}%</span>
+                <span className="font-doodle text-xl text-orange-400 leading-none">{match.score}%</span>
               </div>
             </div>
           </div>
@@ -427,13 +427,13 @@ function ShareSection({ matches, t }: { matches: CareerMatch[]; t: (k: string) =
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.75 }}
-      className="mt-8 bg-[#161b25] border border-gray-800 rounded-3xl p-5 text-center"
+      className="mt-8 bg-[#161b25] border-gray-700 rough-border-2 p-5 text-center"
     >
       <p className="text-white font-medium mb-1">🔗 {t('Share your results')}</p>
       <p className="text-gray-500 text-sm mb-4">{t('Know someone whose job changed? Send them their own path.')}</p>
       <button
         onClick={share}
-        className="w-full py-3 bg-gray-800 hover:bg-gray-700 text-white font-medium rounded-full transition-colors"
+        className="w-full py-3 bg-gray-800 hover:bg-gray-700 text-white font-medium rough-border-2 border-gray-600 transition-colors"
       >
         {copied ? `✓ ${t('Link copied')}` : t('Share')}
       </button>
@@ -467,7 +467,7 @@ function EmailSection({ matches, name, t }: { matches: CareerMatch[]; name: stri
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.8 }}
-      className="mt-8 bg-[#161b25] border border-gray-800 rounded-3xl p-5 text-center"
+      className="mt-8 bg-[#161b25] border-gray-700 rough-border p-5 text-center"
     >
       <p className="text-white font-medium mb-1">📩 {t('Email my results')}</p>
       <p className="text-gray-500 text-sm mb-4">{t('Get your matches, interview prep and learning roadmap in your inbox.')}</p>
@@ -486,7 +486,7 @@ function EmailSection({ matches, name, t }: { matches: CareerMatch[]; name: stri
           <button
             onClick={send}
             disabled={status === 'sending' || !email.includes('@')}
-            className="px-5 py-2.5 bg-orange-500 hover:bg-orange-400 disabled:bg-gray-800 disabled:text-gray-600 text-white text-sm font-medium rounded-full transition-all"
+            className="px-5 py-2.5 bg-orange-500 hover:bg-orange-400 disabled:bg-gray-800 disabled:text-gray-600 text-white text-sm font-medium rough-border-2 border-orange-300 transition-all"
           >
             {status === 'sending' ? '...' : t('Send')}
           </button>
@@ -536,7 +536,7 @@ function ThreatAssessment({ answers }: { answers: Answers }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`border rounded-3xl p-5 mb-8 ${riskBg[riskLevel]}`}
+      className={`rough-border p-5 mb-8 ${riskBg[riskLevel]}`}
     >
       <p className="text-xs text-gray-500 uppercase tracking-widest mb-3">{t('The honest picture')}</p>
 
@@ -701,7 +701,7 @@ export default function ResultsPage() {
         >
           <p className="text-xs text-orange-500 uppercase tracking-widest font-medium mb-2">{t('Results')}</p>
           <h1 className="text-3xl font-light text-white mb-2">
-            {name}<span className="text-orange-400 font-medium">{t("'s Escape Plan")}</span>
+            <span className="font-doodle text-orange-400 text-5xl">{name}</span>{t("'s Escape Plan")}
           </h1>
           <p className="text-sm text-gray-500">{t("Here's where you stand — and where you can go")}</p>
 
@@ -722,7 +722,7 @@ export default function ResultsPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="bg-gradient-to-r from-orange-500/10 to-orange-600/10 border border-orange-500/30 rounded-3xl p-5 mb-4 text-center"
+            className="bg-gradient-to-r from-orange-500/10 to-orange-600/10 border-orange-500/40 rough-border p-5 mb-4 text-center"
           >
             <p className="text-orange-400 font-semibold text-lg mb-1">🔓 {locked.length} {t('more matches waiting')}</p>
             <p className="text-gray-400 text-sm mb-4">
@@ -730,7 +730,7 @@ export default function ResultsPage() {
             </p>
             <button
               onClick={() => setUnlocked(true)}
-              className="w-full py-3.5 bg-orange-500 hover:bg-orange-400 text-white font-medium rounded-full text-base transition-all hover:scale-[1.02] shadow-lg shadow-orange-500/25"
+              className="w-full py-3.5 bg-orange-500 hover:bg-orange-400 text-white font-medium rough-border border-orange-300 text-base transition-all hover:scale-[1.02] shadow-lg shadow-orange-500/25"
             >
               {t('Unlock All Matches — $5')}
             </button>
