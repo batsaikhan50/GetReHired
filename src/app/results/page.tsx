@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
-import { calculateMatches, CareerMatch } from '@/lib/scoringEngine'
+import { calculateMatches, careerSlug, CareerMatch } from '@/lib/scoringEngine'
 import { LanguageToggle } from '@/components/LanguageToggle'
 import { useLang } from '@/contexts/LanguageContext'
 import {
@@ -388,6 +388,59 @@ function LockedCard({ rank, delay }: { rank: number; delay: number }) {
   )
 }
 
+// ─── Share section ────────────────────────────────────────────────────────────
+
+function ShareSection({ matches, t }: { matches: CareerMatch[]; t: (k: string) => string }) {
+  const [copied, setCopied] = useState(false)
+  const top = matches[0]
+  if (!top) return null
+
+  const buildShare = () => {
+    const origin = typeof window !== 'undefined' ? window.location.origin : ''
+    const url = `${origin}/career/${careerSlug(top.title)}`
+    const text = `I'm a ${top.score}% match for ${top.title} on GetReHired. Find the career that fits your skills:`
+    return { url, text }
+  }
+
+  const share = async () => {
+    const { url, text } = buildShare()
+    // Prefer the native share sheet on supported devices.
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      try {
+        await navigator.share({ title: 'My GetReHired matches', text, url })
+        return
+      } catch {
+        /* user cancelled or unsupported — fall through to copy */
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(`${text} ${url}`)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch {
+      /* clipboard blocked — no-op */
+    }
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.75 }}
+      className="mt-8 bg-[#161b25] border border-gray-800 rounded-3xl p-5 text-center"
+    >
+      <p className="text-white font-medium mb-1">🔗 {t('Share your results')}</p>
+      <p className="text-gray-500 text-sm mb-4">{t('Know someone whose job changed? Send them their own path.')}</p>
+      <button
+        onClick={share}
+        className="w-full py-3 bg-gray-800 hover:bg-gray-700 text-white font-medium rounded-full transition-colors"
+      >
+        {copied ? `✓ ${t('Link copied')}` : t('Share')}
+      </button>
+    </motion.div>
+  )
+}
+
 // ─── Email results section ────────────────────────────────────────────────────
 
 function EmailSection({ matches, name, t }: { matches: CareerMatch[]; name: string; t: (k: string) => string }) {
@@ -694,7 +747,8 @@ export default function ResultsPage() {
           </div>
         )}
 
-        {/* Email results */}
+        {/* Share + email results */}
+        <ShareSection matches={matches} t={t} />
         <EmailSection matches={matches} name={name} t={t} />
 
       </div>

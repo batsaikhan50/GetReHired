@@ -48,6 +48,13 @@ const mn: Record<string, string> = {
   'Select an option...':        'Сонгоно уу...',
   'Type your answer...':        'Хариултаа бичнэ үү...',
 
+  // ── Resume prompt ────────────────────────────────────────────────────────────
+  'Welcome back':                       'Тавтай морилно уу',
+  'You were on block':                  'Та блок',
+  'Pick up where you left off?':        'Үргэлжлүүлэх үү?',
+  'Continue':                           'Үргэлжлүүлэх',
+  'Start over':                         'Дахин эхлэх',
+
   // ── Summary page ─────────────────────────────────────────────────────────────
   'Profile Complete':           'Профайл бэлэн',
   'This is':                    'Энэ бол',
@@ -307,6 +314,11 @@ const mn: Record<string, string> = {
   'Send':                              'Илгээх',
   'Sent! Check your inbox.':           'Илгээлээ! Имэйлээ шалгана уу.',
   'Something went wrong. Try again.':  'Алдаа гарлаа. Дахин оролдоно уу.',
+  'Share your results':                'Үр дүнгээ хуваалцах',
+  'Know someone whose job changed? Send them their own path.':
+    'Ажил нь өөрчлөгдсөн хүн таних уу? Тэдэнд өөрсдийн замыг илгээ.',
+  'Share':                             'Хуваалцах',
+  'Link copied':                       'Холбоос хуулагдлаа',
   'Unlock to reveal':                'Нэгдэх',
   'See every career path ranked for you — plus skills roadmap, salary insights, and live job listings for each.':
     'Таны хувьд эрэмбэлэгдсэн бүх ажлын замыг харах — ур чадварын зам, цалингийн мэдээлэл, бодит ажлын байрууд.',

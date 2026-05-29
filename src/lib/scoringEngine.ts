@@ -1750,3 +1750,72 @@ export function calculateMatches(answers: Answers, lang: Lang = 'en'): CareerMat
     })
     .sort((a, b) => b.score - a.score)
 }
+
+// ─── Public career directory (standalone, no user answers needed) ─────────────
+// Powers the /career/[slug] detail pages, which work for SEO/sharing even
+// before someone takes the assessment.
+
+/** URL-safe slug for a career title, e.g. "UX / Product Designer" → "ux-product-designer". */
+export function careerSlug(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[/&]/g, ' ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
+export interface CareerDetail {
+  title: string
+  emoji: string
+  field: string
+  slug: string
+  salaryRange: string
+  timeToHire: string
+  tasks: string[]
+  skills: string[]
+  tools: string[]
+  whyItFits: string[]
+  skillsNeeded: string[]
+  interviewQuestions: string[]
+  retrainingRoadmap: { skill: string; url: string; platform: string }[]
+}
+
+function toDetail(c: CareerProfile): CareerDetail {
+  return {
+    title: c.title,
+    emoji: c.emoji,
+    field: c.field,
+    slug: careerSlug(c.title),
+    salaryRange: `$${Math.round(c.salaryMin / 1000)}k–$${Math.round(c.salaryMax / 1000)}k`,
+    timeToHire: c.timeToHire,
+    tasks: c.tasks,
+    skills: c.skills,
+    tools: c.tools,
+    whyItFits: c.staticReasons,
+    skillsNeeded: c.skillsNeeded,
+    interviewQuestions: c.interviewQuestions,
+    retrainingRoadmap: c.retrainingRoadmap,
+  }
+}
+
+/** Every career slug — used for static generation of detail pages. */
+export function allCareerSlugs(): string[] {
+  return careerProfiles.map((c) => careerSlug(c.title))
+}
+
+/** Look up one career's public detail by slug. Returns null if unknown. */
+export function getCareerDetail(slug: string): CareerDetail | null {
+  const match = careerProfiles.find((c) => careerSlug(c.title) === slug)
+  return match ? toDetail(match) : null
+}
+
+/** Lightweight list of all careers for index/directory views. */
+export function listCareers(): Pick<CareerDetail, 'title' | 'emoji' | 'field' | 'slug' | 'salaryRange'>[] {
+  return careerProfiles.map((c) => ({
+    title: c.title,
+    emoji: c.emoji,
+    field: c.field,
+    slug: careerSlug(c.title),
+    salaryRange: `$${Math.round(c.salaryMin / 1000)}k–$${Math.round(c.salaryMax / 1000)}k`,
+  }))
+}

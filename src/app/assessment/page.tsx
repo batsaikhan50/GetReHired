@@ -185,6 +185,61 @@ export default function AssessmentPage() {
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
 
+  // ── Resume in-progress assessment ──────────────────────────────────────────
+  // Snapshot of saved progress, shown as a "Continue?" prompt on return.
+  type Progress = { answers: Answers; blockIdx: number; questionIdx: number }
+  const [resume, setResume] = useState<Progress | null>(null)
+  const [resumeChecked, setResumeChecked] = useState(false)
+
+  // On mount, detect meaningful saved progress and offer to resume.
+  useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem('grh_progress')
+      if (raw) {
+        const saved = JSON.parse(raw) as Progress
+        const hasProgress =
+          saved && saved.answers && Object.keys(saved.answers).length > 0 &&
+          (saved.blockIdx > 0 || saved.questionIdx > 0)
+        if (hasProgress) setResume(saved)
+      }
+    } catch {
+      /* ignore corrupt progress */
+    }
+    setResumeChecked(true)
+  }, [])
+
+  // Persist progress as the user moves through — but not while the resume
+  // prompt is open (that would clobber the saved snapshot with empty state).
+  useEffect(() => {
+    if (!mounted || !resumeChecked || resume) return
+    if (Object.keys(answers).length === 0 && blockIdx === 0 && questionIdx === 0) return
+    try {
+      sessionStorage.setItem(
+        'grh_progress',
+        JSON.stringify({ answers, blockIdx, questionIdx }),
+      )
+    } catch {
+      /* ignore quota errors */
+    }
+  }, [answers, blockIdx, questionIdx, mounted, resumeChecked, resume])
+
+  const continueResume = () => {
+    if (!resume) return
+    setAnswers(resume.answers)
+    setBlockIdx(resume.blockIdx)
+    setQuestionIdx(resume.questionIdx)
+    setResume(null)
+  }
+
+  const startOver = () => {
+    try { sessionStorage.removeItem('grh_progress') } catch { /* ignore */ }
+    setAnswers({})
+    setBlockIdx(0)
+    setQuestionIdx(0)
+    setFeedbacks({})
+    setResume(null)
+  }
+
   // Lock back button (popstate) while answering — swipe gesture blocked via layout CSS
   useEffect(() => {
     history.pushState(null, '', window.location.href)
@@ -224,6 +279,7 @@ export default function AssessmentPage() {
     const isLastBlock = blockIdx >= blocks.length - 1
     if (isLastBlock) {
       sessionStorage.setItem('grh_answers', JSON.stringify(currentAnswers))
+      try { sessionStorage.removeItem('grh_progress') } catch { /* ignore */ }
       router.push('/summary')
     } else {
       setBlockIdx((i) => i + 1)
@@ -320,6 +376,7 @@ export default function AssessmentPage() {
       retraining: '👍 Yes, if it leads to a real job',
     }
     sessionStorage.setItem('grh_answers', JSON.stringify(dummy))
+    try { sessionStorage.removeItem('grh_progress') } catch { /* ignore */ }
     router.push('/summary')
   }
 
@@ -327,6 +384,45 @@ export default function AssessmentPage() {
 
   return (
     <div className="min-h-screen bg-[#0d0f14] flex flex-col overflow-hidden">
+      {/* Resume prompt — shown when returning with saved progress */}
+      <AnimatePresence>
+        {resume && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[70] flex items-center justify-center px-6 bg-black/70 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 16, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 16, scale: 0.97 }}
+              className="w-full max-w-sm bg-[#161b25] border border-gray-800 rounded-3xl p-7 text-center"
+            >
+              <div className="text-4xl mb-4">👋</div>
+              <h2 className="text-xl font-light text-white mb-2">{t('Welcome back')}</h2>
+              <p className="text-sm text-gray-400 mb-6">
+                {t('You were on block')} {resume.blockIdx + 1} / {blocks.length}. {t('Pick up where you left off?')}
+              </p>
+              <div className="flex flex-col gap-2.5">
+                <button
+                  onClick={continueResume}
+                  className="w-full py-3 bg-orange-500 hover:bg-orange-400 text-white font-medium rounded-full transition-all hover:scale-[1.02]"
+                >
+                  {t('Continue')}
+                </button>
+                <button
+                  onClick={startOver}
+                  className="w-full py-3 border border-gray-700 hover:border-gray-500 text-gray-300 text-sm rounded-full transition-colors"
+                >
+                  {t('Start over')}
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <ProgressBar answered={answeredCount} total={totalQuestions} blockId={blockIdx + 1} t={t} />
 
       {/* Language toggle */}

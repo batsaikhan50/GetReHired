@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+// Instantiated lazily inside the handler so the module imports cleanly at build
+// time even when RESEND_API_KEY isn't set in the build environment.
+function getResend(): Resend | null {
+  const key = process.env.RESEND_API_KEY
+  return key ? new Resend(key) : null
+}
 
 interface Match {
   title: string
@@ -99,6 +104,12 @@ export async function POST(request: NextRequest) {
     }
     if (!Array.isArray(matches) || matches.length === 0) {
       return NextResponse.json({ error: 'No matches provided' }, { status: 400 })
+    }
+
+    const resend = getResend()
+    if (!resend) {
+      console.error('RESEND_API_KEY not configured')
+      return NextResponse.json({ error: 'Email service unavailable' }, { status: 503 })
     }
 
     const { error } = await resend.emails.send({
