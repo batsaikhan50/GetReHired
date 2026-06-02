@@ -232,7 +232,10 @@ export default function AssessmentPage() {
   }
 
   const startOver = () => {
-    try { sessionStorage.removeItem('grh_progress') } catch { /* ignore */ }
+    try {
+      sessionStorage.removeItem('grh_progress')
+      sessionStorage.removeItem('grh_unlocked') // a fresh report starts locked
+    } catch { /* ignore */ }
     setAnswers({})
     setBlockIdx(0)
     setQuestionIdx(0)
@@ -279,7 +282,10 @@ export default function AssessmentPage() {
     const isLastBlock = blockIdx >= blocks.length - 1
     if (isLastBlock) {
       sessionStorage.setItem('grh_answers', JSON.stringify(currentAnswers))
-      try { sessionStorage.removeItem('grh_progress') } catch { /* ignore */ }
+      try {
+      sessionStorage.removeItem('grh_progress')
+      sessionStorage.removeItem('grh_unlocked') // a fresh report starts locked
+    } catch { /* ignore */ }
       router.push('/summary')
     } else {
       setBlockIdx((i) => i + 1)
@@ -376,7 +382,10 @@ export default function AssessmentPage() {
       retraining: '👍 Yes, if it leads to a real job',
     }
     sessionStorage.setItem('grh_answers', JSON.stringify(dummy))
-    try { sessionStorage.removeItem('grh_progress') } catch { /* ignore */ }
+    try {
+      sessionStorage.removeItem('grh_progress')
+      sessionStorage.removeItem('grh_unlocked') // a fresh report starts locked
+    } catch { /* ignore */ }
     router.push('/summary')
   }
 
