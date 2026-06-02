@@ -10,6 +10,10 @@ export async function GET(req: NextRequest) {
   if (!checkoutId) {
     return NextResponse.json({ paid: false, error: 'Missing checkout_id' }, { status: 400 })
   }
+  // Dev-only mock: lets the unlock flow be tested without real Polar keys.
+  if (process.env.NODE_ENV !== 'production' && checkoutId === 'dev_mock') {
+    return NextResponse.json({ paid: true, status: 'dev_mock' })
+  }
   if (!polarConfigured()) {
     return NextResponse.json({ paid: false, error: 'Payments not configured' }, { status: 503 })
   }

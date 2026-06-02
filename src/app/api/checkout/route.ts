@@ -9,7 +9,11 @@ export async function GET(req: NextRequest) {
   const origin = req.nextUrl.origin
 
   if (!polarConfigured()) {
-    // Misconfigured env — send the user back rather than crash.
+    // In development without keys, show a mock checkout so the full unlock
+    // flow can be previewed end-to-end. In production, fail gracefully.
+    if (process.env.NODE_ENV !== 'production') {
+      return NextResponse.redirect(`${origin}/payment/mock`)
+    }
     return NextResponse.redirect(`${origin}/results?payment=unavailable`)
   }
 

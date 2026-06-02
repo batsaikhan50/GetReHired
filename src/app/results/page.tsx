@@ -667,6 +667,7 @@ export default function ResultsPage() {
   const [name, setName]         = useState('You')
   const [country, setCountry]   = useState('')
   const [unlocked, setUnlocked] = useState(false)
+  const [payNotice, setPayNotice] = useState<string | null>(null)
   const { lang, t } = useLang()
 
   useEffect(() => {
@@ -679,6 +680,10 @@ export default function ResultsPage() {
     setMatches(calculateMatches(parsed, lang))
     // Reveal everything if the user has already paid (set on /payment/success).
     if (sessionStorage.getItem('grh_unlocked') === '1') setUnlocked(true)
+    // Surface checkout fallbacks instead of a silent reload.
+    const pay = new URLSearchParams(window.location.search).get('payment')
+    if (pay === 'unavailable') setPayNotice("Payments aren't set up yet — check back soon.")
+    else if (pay === 'error') setPayNotice('Something went wrong starting checkout. Please try again.')
   }, [lang])
 
   if (matches.length === 0) return null
@@ -708,6 +713,13 @@ export default function ResultsPage() {
           <p className="text-sm text-gray-500">{t("Here's where you stand — and where you can go")}</p>
 
         </motion.div>
+
+        {/* Checkout fallback notice */}
+        {payNotice && (
+          <div className="mb-6 px-4 py-3 rounded-2xl bg-yellow-500/10 border border-yellow-500/30 text-yellow-300 text-sm text-center">
+            {payNotice}
+          </div>
+        )}
 
         {/* Threat assessment — shown when we have enough data */}
         {answers.jobTitle && (
