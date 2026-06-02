@@ -132,9 +132,9 @@ function LockedJobsRow({ t }: { t: (k: string) => string }) {
             </div>
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0d0f14]/75 rounded-2xl px-3 text-center">
               <span className="text-lg mb-1">🔒</span>
-              <button className="px-3 py-1.5 bg-orange-500 hover:bg-orange-400 text-white text-xs font-medium rounded-full transition-all leading-snug">
+              <a href="/api/checkout" className="px-3 py-1.5 bg-orange-500 hover:bg-orange-400 text-white text-xs font-medium rounded-full transition-all leading-snug">
                 $5 — unlocks all
-              </button>
+              </a>
             </div>
           </div>
         ))}
@@ -188,9 +188,9 @@ function JobsRow({ career, country, unlocked }: { career: string; country: strin
             </div>
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0d0f14]/75 rounded-2xl px-3 text-center">
               <span className="text-lg mb-1">🔒</span>
-              <button className="px-3 py-1.5 bg-orange-500 hover:bg-orange-400 text-white text-xs font-medium rounded-full transition-all leading-snug">
+              <a href="/api/checkout" className="px-3 py-1.5 bg-orange-500 hover:bg-orange-400 text-white text-xs font-medium rounded-full transition-all leading-snug">
                 $5 — unlocks all
-              </button>
+              </a>
             </div>
           </div>
         ))}
@@ -677,6 +677,8 @@ export default function ResultsPage() {
     setName((parsed.firstName as string) || 'You')
     setCountry((parsed.country as string) || '')
     setMatches(calculateMatches(parsed, lang))
+    // Reveal everything if the user has already paid (set on /payment/success).
+    if (sessionStorage.getItem('grh_unlocked') === '1') setUnlocked(true)
   }, [lang])
 
   if (matches.length === 0) return null
@@ -728,12 +730,12 @@ export default function ResultsPage() {
             <p className="text-gray-400 text-sm mb-4">
               {t('See every career path ranked for you — plus skills roadmap, salary insights, and live job listings for each.')}
             </p>
-            <button
-              onClick={() => setUnlocked(true)}
-              className="w-full py-3.5 bg-orange-500 hover:bg-orange-400 text-white font-medium rough-border border-orange-300 text-base transition-all hover:scale-[1.02] shadow-lg shadow-orange-500/25"
+            <a
+              href="/api/checkout"
+              className="block w-full py-3.5 bg-orange-500 hover:bg-orange-400 text-white font-medium rough-border border-orange-300 text-base transition-all hover:scale-[1.02] shadow-lg shadow-orange-500/25"
             >
               {t('Unlock All Matches — $5')}
-            </button>
+            </a>
             <p className="text-xs text-gray-600 mt-2">{t('One-time payment. No subscription.')}</p>
           </motion.div>
         )}

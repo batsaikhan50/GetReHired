@@ -9,6 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@polar-sh/nextjs": "^0.9.6",
+    "@polar-sh/sdk": "^0.47.1",
     "@supabase/ssr": "^0.10.3",
     "@supabase/supabase-js": "^2.106.0",
     "framer-motion": "^12.39.0",
