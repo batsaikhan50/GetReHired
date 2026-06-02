@@ -736,19 +736,19 @@ export default function ResultsPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="bg-gradient-to-r from-orange-500/10 to-orange-600/10 border-orange-500/40 rough-border p-5 mb-4 text-center"
+            className="bg-gradient-to-b from-orange-500/10 to-transparent border border-orange-500/30 rounded-2xl p-6 mb-4 text-center"
           >
-            <p className="text-orange-400 font-semibold text-lg mb-1">🔓 {locked.length} {t('more matches waiting')}</p>
-            <p className="text-gray-400 text-sm mb-4">
+            <p className="text-orange-400 font-semibold text-lg mb-1">{locked.length} {t('more matches waiting')}</p>
+            <p className="text-gray-400 text-sm mb-5">
               {t('See every career path ranked for you — plus skills roadmap, salary insights, and live job listings for each.')}
             </p>
             <a
               href="/api/checkout"
-              className="block w-full py-3.5 bg-orange-500 hover:bg-orange-400 text-white font-medium rough-border border-orange-300 text-base transition-all hover:scale-[1.02] shadow-lg shadow-orange-500/25"
+              className="block w-full py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-lg text-base transition-colors"
             >
               {t('Unlock All Matches — $5')}
             </a>
-            <p className="text-xs text-gray-600 mt-2">{t('One-time payment. No subscription.')}</p>
+            <p className="text-xs text-gray-600 mt-3">{t('One-time payment. No subscription.')}</p>
           </motion.div>
         )}
 
