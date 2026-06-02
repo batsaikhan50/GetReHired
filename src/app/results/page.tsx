@@ -443,11 +443,12 @@ function ShareSection({ matches, t }: { matches: CareerMatch[]; t: (k: string) =
 
 // ─── Email results section ────────────────────────────────────────────────────
 
-function EmailSection({ matches, name, t }: { matches: CareerMatch[]; name: string; t: (k: string) => string }) {
+function EmailSection({ matches, name, t, unlocked }: { matches: CareerMatch[]; name: string; t: (k: string) => string; unlocked: boolean }) {
   const [email, setEmail]     = useState('')
   const [status, setStatus]   = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
 
   const send = async () => {
+    if (!unlocked) { window.location.href = '/api/checkout'; return }
     if (!email.includes('@')) return
     setStatus('sending')
     try {
@@ -483,13 +484,20 @@ function EmailSection({ matches, name, t }: { matches: CareerMatch[]; name: stri
             placeholder={t('your@email.com')}
             className="flex-1 bg-gray-900 border border-gray-700 rounded-full px-4 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-orange-500 transition-colors"
           />
-          <button
-            onClick={send}
-            disabled={status === 'sending' || !email.includes('@')}
-            className="px-5 py-2.5 bg-orange-500 hover:bg-orange-400 disabled:bg-gray-800 disabled:text-gray-600 text-white text-sm font-medium rough-border-2 border-orange-300 transition-all"
-          >
-            {status === 'sending' ? '...' : t('Send')}
-          </button>
+          <div className="relative group">
+            {!unlocked && (
+              <span className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-800 border border-gray-600 px-2.5 py-1 text-xs text-orange-300 opacity-0 group-hover:opacity-100 transition-opacity">
+                🔒 {t('need to pay')}
+              </span>
+            )}
+            <button
+              onClick={send}
+              disabled={unlocked && (status === 'sending' || !email.includes('@'))}
+              className="px-5 py-2.5 bg-orange-500 hover:bg-orange-400 disabled:bg-gray-800 disabled:text-gray-600 text-white text-sm font-medium rough-border-2 border-orange-300 transition-all"
+            >
+              {status === 'sending' ? '...' : t('Send')}
+            </button>
+          </div>
         </div>
       )}
       {status === 'error' && <p className="text-red-400 text-xs mt-2">{t('Something went wrong. Try again.')}</p>}
@@ -763,7 +771,7 @@ export default function ResultsPage() {
 
         {/* Share + email results */}
         <ShareSection matches={matches} t={t} />
-        <EmailSection matches={matches} name={name} t={t} />
+        <EmailSection matches={matches} name={name} t={t} unlocked={unlocked} />
 
       </div>
     </div>

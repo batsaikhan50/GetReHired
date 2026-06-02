@@ -319,6 +319,7 @@ const mn: Record<string, string> = {
     'Ажил нь өөрчлөгдсөн хүн таних уу? Тэдэнд өөрсдийн замыг илгээ.',
   'Share':                             'Хуваалцах',
   'Link copied':                       'Холбоос хуулагдлаа',
+  'need to pay':                       'төлбөр төлөх шаардлагатай',
   'Unlock to reveal':                'Нэгдэх',
   'See every career path ranked for you — plus skills roadmap, salary insights, and live job listings for each.':
     'Таны хувьд эрэмбэлэгдсэн бүх ажлын замыг харах — ур чадварын зам, цалингийн мэдээлэл, бодит ажлын байрууд.',
