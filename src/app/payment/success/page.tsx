@@ -44,6 +44,10 @@ function SuccessInner() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-blue-50 flex flex-col items-center justify-center px-6 text-center">
+      <div className="flex items-center justify-center gap-1 mb-5">
+        <span className="text-xl font-bold text-slate-900 tracking-tight">GetRe</span>
+        <span className="font-doodle text-3xl text-orange-500 leading-none">Hired</span>
+      </div>
       <div className="w-full max-w-md bg-white border border-slate-200 rounded-2xl shadow-xl shadow-slate-200/60 px-8 py-10">
         {state === 'verifying' && (
           <>
