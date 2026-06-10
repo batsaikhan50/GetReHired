@@ -39,9 +39,8 @@ export default function SummaryPage() {
   const cleanSuperpower = superpower.replace(/^To /, '')
 
   return (
-    <div className="min-h-screen bg-[#0d0f14] flex flex-col items-center justify-center px-4 py-12 relative overflow-hidden">
-      <div className="fixed right-5 top-[calc(1.25rem+var(--safe-top))] z-50"><LanguageToggle /></div>
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-orange-500/6 blur-[120px] pointer-events-none" />
+    <div className="min-h-screen bg-[var(--background)] flex flex-col items-center justify-center px-4 py-12 relative overflow-hidden">
+      <div className="fixed right-5 top-[calc(1.25rem+var(--safe-top))] z-50"><LanguageToggle variant="light" /></div>
 
       <div className="w-full max-w-md relative z-10">
 
@@ -50,11 +49,11 @@ export default function SummaryPage() {
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
           className="text-center mb-8"
         >
-          <p className="text-xs text-orange-500 uppercase tracking-widest font-medium mb-2">{t('Profile Complete')}</p>
-          <h1 className="text-3xl font-light text-white mb-2">
-            {t('This is')} <span className="font-doodle text-orange-400 text-5xl">{name}.</span>
+          <p className="text-xs text-stone-500 uppercase tracking-[0.18em] mb-2">{t('Profile Complete')}</p>
+          <h1 className="font-display text-3xl text-stone-900 mb-2">
+            {t('This is')} <span className="font-display italic text-[var(--accent)] text-4xl">{name}.</span>
           </h1>
-          <p className="text-gray-500 text-sm">{t('Built from your actual work history — not a personality quiz.')}</p>
+          <p className="text-stone-500 text-sm">{t('Built from your actual work history — not a personality quiz.')}</p>
         </motion.div>
 
         {/* Stats strip */}
@@ -67,9 +66,9 @@ export default function SummaryPage() {
             { value: String(dailyTasks.length || '—'), label: t('Tasks Mapped') },
             { value: String(skills.length || '—'),     label: t('Skills Found') },
           ].map((s, i) => (
-            <div key={i} className="bg-gray-900/60 border-gray-700 rough-border-2 py-3 text-center">
-              <div className="font-doodle text-3xl text-orange-400 leading-none">{s.value}</div>
-              <div className="text-xs text-gray-500 mt-1">{s.label}</div>
+            <div key={i} className="bg-white border border-[var(--border)] rounded-lg py-3 text-center">
+              <div className="font-display text-2xl text-[var(--accent)] leading-none tabular-nums">{s.value}</div>
+              <div className="text-xs text-stone-500 mt-1">{s.label}</div>
             </div>
           ))}
         </motion.div>
@@ -77,11 +76,11 @@ export default function SummaryPage() {
         {/* Main card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
-          className="bg-[#161b25] border-gray-700 rough-border overflow-hidden mb-4"
+          className="bg-white border border-[var(--border)] rounded-lg shadow-[0_1px_3px_rgba(28,25,23,0.06)] overflow-hidden mb-4"
         >
           {/* Background */}
-          <div className="px-5 pt-5 pb-4 border-b border-gray-800/60">
-            <p className="text-xs text-gray-600 uppercase tracking-widest mb-3">{t('Background')}</p>
+          <div className="px-5 pt-5 pb-4 border-b border-[var(--border)]">
+            <p className="text-[11px] text-stone-400 uppercase tracking-[0.15em] mb-3">{t('Background')}</p>
             <div className="grid grid-cols-2 gap-y-3 gap-x-4">
               {[
                 { label: t('Last Role'),  value: jobTitle },
@@ -91,8 +90,8 @@ export default function SummaryPage() {
                 { label: t('Country'),    value: t(country) },
               ].map((row, i) => (
                 <div key={i}>
-                  <p className="text-xs text-gray-600">{row.label}</p>
-                  <p className="text-sm text-white font-medium truncate">{row.value}</p>
+                  <p className="text-xs text-stone-400">{row.label}</p>
+                  <p className="text-sm text-stone-900 font-medium truncate">{row.value}</p>
                 </div>
               ))}
             </div>
@@ -100,8 +99,8 @@ export default function SummaryPage() {
 
           {/* What they actually did */}
           {dailyTasks.length > 0 && (
-            <div className="px-5 pt-4 pb-4 border-b border-gray-800/60">
-              <p className="text-xs text-gray-600 uppercase tracking-widest mb-3">{t('What You Did')}</p>
+            <div className="px-5 pt-4 pb-4 border-b border-[var(--border)]">
+              <p className="text-[11px] text-stone-400 uppercase tracking-[0.15em] mb-3">{t('What You Did')}</p>
               <div className="flex flex-wrap gap-1.5">
                 {dailyTasks.map((t, i) => (
                   <motion.span
@@ -109,7 +108,7 @@ export default function SummaryPage() {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.4 + i * 0.04 }}
-                    className="px-2.5 py-1 bg-gray-800/60 border border-gray-700/60 rounded-full text-xs text-gray-300"
+                    className="px-2.5 py-1 bg-stone-100 border border-stone-200 rounded-full text-xs text-stone-700"
                   >
                     {t}
                   </motion.span>
@@ -120,8 +119,8 @@ export default function SummaryPage() {
 
           {/* Confirmed skills */}
           {skills.length > 0 && (
-            <div className="px-5 pt-4 pb-4 border-b border-gray-800/60">
-              <p className="text-xs text-gray-600 uppercase tracking-widest mb-3">{t('Confirmed Skills')}</p>
+            <div className="px-5 pt-4 pb-4 border-b border-[var(--border)]">
+              <p className="text-[11px] text-stone-400 uppercase tracking-[0.15em] mb-3">{t('Confirmed Skills')}</p>
               <div className="flex flex-wrap gap-1.5">
                 {skills.map((s, i) => (
                   <motion.span
@@ -129,7 +128,7 @@ export default function SummaryPage() {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.6 + i * 0.04 }}
-                    className="px-2.5 py-1 bg-orange-500/10 border border-orange-500/25 rounded-full text-xs text-orange-300"
+                    className="px-2.5 py-1 bg-orange-50 border border-orange-200 rounded-full text-xs text-orange-800"
                   >
                     {s}
                   </motion.span>
@@ -140,31 +139,31 @@ export default function SummaryPage() {
 
           {/* Superpower + what they want */}
           <div className="px-5 pt-4 pb-5">
-            <p className="text-xs text-gray-600 uppercase tracking-widest mb-3">{t('Your Edge & Goals')}</p>
+            <p className="text-[11px] text-stone-400 uppercase tracking-[0.15em] mb-3">{t('Your Edge & Goals')}</p>
             <div className="space-y-2">
               {superpower !== '—' && (
                 <div className="flex items-start gap-2">
-                  <span className="text-orange-500 mt-0.5 text-xs">⚡</span>
-                  <p className="text-sm text-gray-300">
-                    <span className="text-white font-medium">{t('Superpower:')}</span>{' '}
+                  <span className="mt-0.5 text-xs">⚡</span>
+                  <p className="text-sm text-stone-600">
+                    <span className="text-stone-900 font-medium">{t('Superpower:')}</span>{' '}
                     {t(cleanSuperpower)}
                   </p>
                 </div>
               )}
               {jobType !== '—' && (
                 <div className="flex items-start gap-2">
-                  <span className="text-orange-500 mt-0.5 text-xs">🎯</span>
-                  <p className="text-sm text-gray-300">
-                    <span className="text-white font-medium">{t('Looking for:')}</span>{' '}
+                  <span className="mt-0.5 text-xs">🎯</span>
+                  <p className="text-sm text-stone-600">
+                    <span className="text-stone-900 font-medium">{t('Looking for:')}</span>{' '}
                     {t(jobType)}
                   </p>
                 </div>
               )}
               {salary !== '—' && (
                 <div className="flex items-start gap-2">
-                  <span className="text-orange-500 mt-0.5 text-xs">💰</span>
-                  <p className="text-sm text-gray-300">
-                    <span className="text-white font-medium">{t('Target salary:')}</span>{' '}
+                  <span className="mt-0.5 text-xs">💰</span>
+                  <p className="text-sm text-stone-600">
+                    <span className="text-stone-900 font-medium">{t('Target salary:')}</span>{' '}
                     {t(salary)}
                   </p>
                 </div>
@@ -180,11 +179,11 @@ export default function SummaryPage() {
         >
           <button
             onClick={() => router.push('/calculating')}
-            className="w-full py-4 bg-orange-500 hover:bg-orange-400 text-white font-medium rough-border border-orange-300 text-lg transition-all hover:scale-[1.02] shadow-lg shadow-orange-500/20"
+            className="w-full py-4 bg-stone-900 hover:bg-stone-700 text-[#faf8f4] text-lg rounded-md transition-colors"
           >
             {t('Find My Career Matches →')}
           </button>
-          <p className="text-xs text-gray-600 mt-3">{t('Free · No account needed · Takes 3 seconds')}</p>
+          <p className="text-xs text-stone-400 mt-3">{t('Free · No account needed · Takes 3 seconds')}</p>
         </motion.div>
 
       </div>

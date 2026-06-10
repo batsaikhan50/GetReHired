@@ -19,12 +19,12 @@ function ProgressBar({ answered, total, blockId, t }: {
   const pct = Math.round((answered / total) * 100)
   return (
     <div className="w-full px-6 pt-5 pb-3 max-w-xl mx-auto">
-      <div className="flex justify-between text-xs text-gray-500 mb-2">
+      <div className="flex justify-between text-xs text-stone-400 mb-2">
         <span>{t('Block')} {blockId} / {blocks.length}</span>
         <span>{pct}%</span>
       </div>
-      <div className="w-full h-1 bg-gray-800 rounded-full overflow-hidden">
-        <motion.div className="h-full bg-orange-500 rounded-full" animate={{ width: `${pct}%` }} transition={{ duration: 0.4 }} />
+      <div className="w-full h-1 bg-stone-200 rounded-full overflow-hidden">
+        <motion.div className="h-full bg-[var(--accent)] rounded-full" animate={{ width: `${pct}%` }} transition={{ duration: 0.4 }} />
       </div>
     </div>
   )
@@ -53,8 +53,8 @@ function QuestionCardContent({
     <div className="flex flex-col h-full">
       {/* Question text — translated for display */}
       <div className="mb-6">
-        <h2 className="text-xl md:text-2xl font-light text-white leading-snug">{t(question.text)}</h2>
-        {question.subtitle && <p className="text-sm text-gray-400 mt-2">{t(question.subtitle)}</p>}
+        <h2 className="font-display text-xl md:text-2xl text-stone-900 leading-snug">{t(question.text)}</h2>
+        {question.subtitle && <p className="text-sm text-stone-500 mt-2">{t(question.subtitle)}</p>}
       </div>
 
       {/* Answers */}
@@ -66,7 +66,7 @@ function QuestionCardContent({
             onChange={(e) => onSingle(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && canNext && onNext()}
             autoFocus={isCurrent}
-            className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 transition-colors"
+            className="w-full px-4 py-3 bg-white border border-[var(--border)] rounded-lg text-stone-900 placeholder-stone-400 focus:outline-none focus:border-[var(--accent)] transition-colors"
           />
         )}
 
@@ -74,7 +74,7 @@ function QuestionCardContent({
           <select
             value={selected as string}
             onChange={(e) => onSingle(e.target.value)}
-            className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-xl text-white focus:outline-none focus:border-orange-500 transition-colors appearance-none"
+            className="w-full px-4 py-3 bg-white border border-[var(--border)] rounded-lg text-stone-900 focus:outline-none focus:border-[var(--accent)] transition-colors appearance-none"
           >
             <option value="" disabled>{t('Select an option...')}</option>
             {/* value = English (for scoring), display = translated */}
@@ -87,10 +87,10 @@ function QuestionCardContent({
         {question.type === 'single' && question.options?.map((opt) => (
           <button
             key={opt} onClick={() => onSingle(opt)}
-            className={`w-full text-left px-4 py-3 rounded-xl border text-sm transition-all duration-150 ${
+            className={`w-full text-left px-4 py-3 rounded-lg border text-sm transition-all duration-150 ${
               selected === opt
-                ? 'border-orange-500 bg-orange-500/10 text-orange-300'
-                : 'border-gray-700 bg-gray-900/50 text-gray-300 hover:border-gray-500'
+                ? 'border-[var(--accent)] bg-orange-50 text-stone-900'
+                : 'border-[var(--border)] bg-white text-stone-700 hover:border-stone-400'
             }`}
           >{t(opt)}</button>
         ))}
@@ -100,10 +100,10 @@ function QuestionCardContent({
             {question.options?.map((opt) => (
               <button
                 key={opt} onClick={() => onMultiToggle(opt)}
-                className={`w-full text-left px-4 py-3 rounded-xl border text-sm transition-all duration-150 ${
+                className={`w-full text-left px-4 py-3 rounded-lg border text-sm transition-all duration-150 ${
                   ((selected as string[]) || []).includes(opt)
-                    ? 'border-orange-500 bg-orange-500/10 text-orange-300'
-                    : 'border-gray-700 bg-gray-900/50 text-gray-300 hover:border-gray-500'
+                    ? 'border-[var(--accent)] bg-orange-50 text-stone-900'
+                    : 'border-[var(--border)] bg-white text-stone-700 hover:border-stone-400'
                 }`}
               >{t(opt)}</button>
             ))}
@@ -114,17 +114,17 @@ function QuestionCardContent({
       {/* Continue button — only for text/multi/dropdown */}
       {isCurrent && (question.type === 'text' || question.type === 'multi' || question.type === 'dropdown') && (
         <div className="flex items-center justify-between mt-6">
-          <button onClick={onBack} className="text-sm text-gray-500 hover:text-gray-300 transition-colors">{t('← Back')}</button>
+          <button onClick={onBack} className="text-sm text-stone-400 hover:text-stone-600 transition-colors">{t('← Back')}</button>
           <button
             onClick={onNext} disabled={!canNext}
-            className="px-8 py-3 bg-orange-500 hover:bg-orange-400 disabled:bg-gray-800 disabled:text-gray-600 text-white font-medium rough-border border-orange-300 transition-all hover:scale-105 disabled:hover:scale-100"
+            className="px-8 py-3 bg-stone-900 hover:bg-stone-700 disabled:bg-stone-200 disabled:text-stone-400 text-[#faf8f4] rounded-md transition-colors"
           >{t('Continue →')}</button>
         </div>
       )}
 
       {isCurrent && (question.type === 'single' || question.type === 'rating5') && (
         <div className="mt-6">
-          <button onClick={onBack} className="text-sm text-gray-500 hover:text-gray-300 transition-colors">{t('← Back')}</button>
+          <button onClick={onBack} className="text-sm text-stone-400 hover:text-stone-600 transition-colors">{t('← Back')}</button>
         </div>
       )}
     </div>
@@ -142,29 +142,29 @@ function RewardBottomSheet({ blockId, answers, onContinue, t }: {
   return (
     <div className="flex flex-col items-center h-full px-6 pt-5 pb-6 text-center">
       {/* Handle bar */}
-      <div className="w-10 h-1 bg-gray-700 rounded-full mb-5" />
+      <div className="w-10 h-1 bg-stone-300 rounded-full mb-5" />
 
       <div className="flex items-center justify-center gap-3 mb-4">
         <span className="text-3xl">{c.emoji}</span>
-        <h3 className="text-lg font-medium text-white leading-snug">{c.headline}</h3>
+        <h3 className="font-display text-lg text-stone-900 leading-snug">{c.headline}</h3>
       </div>
 
       {/* Stats pills */}
       <div className="flex gap-2 flex-wrap justify-center mb-4">
         {c.stats.map((s, i) => (
-          <div key={i} className="px-3 py-2 bg-gray-800 rough-border-2 border-gray-700 text-center min-w-[80px]">
-            <div className="font-doodle text-2xl text-orange-400 leading-none">{s.value}</div>
-            <div className="text-xs text-gray-400 leading-snug mt-0.5">{s.label}</div>
+          <div key={i} className="px-3 py-2 bg-stone-50 border border-[var(--border)] rounded-lg text-center min-w-[80px]">
+            <div className="font-display text-xl text-[var(--accent)] leading-none tabular-nums">{s.value}</div>
+            <div className="text-xs text-stone-500 leading-snug mt-0.5">{s.label}</div>
           </div>
         ))}
       </div>
 
-      <p className="text-sm text-gray-300 leading-relaxed mt-1">{c.message}</p>
-      {c.teaser && <p className="text-xs text-gray-500 italic mt-2">{c.teaser}</p>}
+      <p className="text-sm text-stone-600 leading-relaxed mt-1">{c.message}</p>
+      {c.teaser && <p className="text-xs text-stone-400 italic mt-2">{c.teaser}</p>}
 
       <button
         onClick={onContinue}
-        className="w-full mt-5 py-4 bg-orange-500 hover:bg-orange-400 text-white font-medium rough-border border-orange-300 transition-all hover:scale-[1.02]"
+        className="w-full mt-5 py-4 bg-stone-900 hover:bg-stone-700 text-[#faf8f4] rounded-md transition-colors"
       >
         {isFinal ? t('🎯 See My Career Matches →') : t('Keep Going →')}
       </button>
@@ -392,7 +392,7 @@ export default function AssessmentPage() {
   if (!question) return null
 
   return (
-    <div className="min-h-screen bg-[#0d0f14] flex flex-col overflow-hidden">
+    <div className="min-h-screen bg-[var(--background)] flex flex-col overflow-hidden">
       {/* Resume prompt — shown when returning with saved progress */}
       <AnimatePresence>
         {resume && (
@@ -400,29 +400,29 @@ export default function AssessmentPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[70] flex items-center justify-center px-6 bg-black/70 backdrop-blur-sm"
+            className="fixed inset-0 z-[70] flex items-center justify-center px-6 bg-stone-900/40 backdrop-blur-sm"
           >
             <motion.div
               initial={{ opacity: 0, y: 16, scale: 0.97 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 16, scale: 0.97 }}
-              className="w-full max-w-sm bg-[#161b25] border-gray-700 rough-border p-7 text-center"
+              className="w-full max-w-sm bg-white border border-[var(--border)] rounded-xl shadow-xl p-7 text-center"
             >
               <div className="text-4xl mb-4">👋</div>
-              <h2 className="text-xl font-light text-white mb-2">{t('Welcome back')}</h2>
-              <p className="text-sm text-gray-400 mb-6">
+              <h2 className="font-display text-xl text-stone-900 mb-2">{t('Welcome back')}</h2>
+              <p className="text-sm text-stone-500 mb-6">
                 {t('You were on block')} {resume.blockIdx + 1} / {blocks.length}. {t('Pick up where you left off?')}
               </p>
               <div className="flex flex-col gap-2.5">
                 <button
                   onClick={continueResume}
-                  className="w-full py-3 bg-orange-500 hover:bg-orange-400 text-white font-medium rough-border border-orange-300 transition-all hover:scale-[1.02]"
+                  className="w-full py-3 bg-stone-900 hover:bg-stone-700 text-[#faf8f4] rounded-md transition-colors"
                 >
                   {t('Continue')}
                 </button>
                 <button
                   onClick={startOver}
-                  className="w-full py-3 border-gray-600 hover:border-gray-400 text-gray-300 text-sm rough-border-2 transition-colors"
+                  className="w-full py-3 border border-stone-300 hover:border-stone-500 text-stone-700 text-sm rounded-md transition-colors"
                 >
                   {t('Start over')}
                 </button>
@@ -436,14 +436,14 @@ export default function AssessmentPage() {
 
       {/* Language toggle */}
       <div className="fixed left-4 top-[calc(1rem+var(--safe-top))] z-[60]">
-        <LanguageToggle />
+        <LanguageToggle variant="light" />
       </div>
 
       {/* Dev buttons */}
       {mounted && process.env.NODE_ENV === 'development' && (
         <div className="fixed right-4 top-[calc(1rem+var(--safe-top))] flex gap-2 z-[60]">
-          <button onClick={skipBlock} className="text-xs text-gray-600 hover:text-gray-400 border border-gray-800 px-3 py-1 rounded-full">skip block →</button>
-          <button onClick={skipToResults} className="text-xs text-gray-600 hover:text-gray-400 border border-gray-800 px-3 py-1 rounded-full">→ results</button>
+          <button onClick={skipBlock} className="text-xs text-stone-400 hover:text-stone-600 border border-stone-300 px-3 py-1 rounded-full">skip block →</button>
+          <button onClick={skipToResults} className="text-xs text-stone-400 hover:text-stone-600 border border-stone-300 px-3 py-1 rounded-full">→ results</button>
         </div>
       )}
 
@@ -485,11 +485,11 @@ export default function AssessmentPage() {
               onClick={!isCurrent ? (offset < 0 ? handleBack : rightClickable ? () => setQuestionIdx(idx) : undefined) : undefined}
             >
               {/* Card box */}
-              <div className={`relative bg-[#161b25] rough-border p-6 flex flex-col ${
-                isCurrent ? 'border-gray-700' : 'border-gray-800'
+              <div className={`relative bg-white border rounded-xl p-6 flex flex-col ${
+                isCurrent ? 'border-[var(--border)] shadow-[0_2px_10px_rgba(28,25,23,0.07)]' : 'border-stone-200'
               }`}>
                 <div className={!isCurrent ? 'opacity-40' : ''}>
-                  <p className="text-xs text-orange-400/60 mb-4 uppercase tracking-widest">
+                  <p className="text-[11px] text-stone-400 mb-4 uppercase tracking-[0.15em]">
                     {t('Question')} {idx + 1} / {block.questions.length}
                   </p>
                   <QuestionCardContent
@@ -512,7 +512,7 @@ export default function AssessmentPage() {
                 <motion.p
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-xl font-semibold text-orange-300 mt-3 text-center"
+                  className="font-display italic text-xl text-[var(--accent)] mt-3 text-center"
                 >
                   {t(feedbacks[q.field])}
                 </motion.p>
@@ -529,7 +529,7 @@ export default function AssessmentPage() {
             {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/70 z-40"
+              className="fixed inset-0 bg-stone-900/40 z-40"
               onClick={handleRewardContinue}
             />
             {/* Sheet */}
@@ -542,7 +542,7 @@ export default function AssessmentPage() {
               dragConstraints={{ top: 0 }}
               dragElastic={{ top: 0, bottom: 0.4 }}
               onDragEnd={(_, info) => { if (info.offset.y > 80) handleRewardContinue() }}
-              className="fixed bottom-0 inset-x-0 bg-[#161b25] border-t border-gray-800 rounded-t-3xl z-50 overflow-y-auto cursor-grab active:cursor-grabbing pb-[var(--safe-bottom)]"
+              className="fixed bottom-0 inset-x-0 bg-white border-t border-[var(--border)] shadow-[0_-4px_20px_rgba(28,25,23,0.1)] rounded-t-3xl z-50 overflow-y-auto cursor-grab active:cursor-grabbing pb-[var(--safe-bottom)]"
             >
               <RewardBottomSheet blockId={blockIdx + 1} answers={answers} onContinue={handleRewardContinue} t={t} />
             </motion.div>

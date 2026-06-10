@@ -254,24 +254,24 @@ export function getRiskLevel(risk: number): RiskLevel {
 }
 
 export const riskColors: Record<RiskLevel, string> = {
-  critical: 'text-red-400',
-  high:     'text-orange-400',
-  moderate: 'text-yellow-400',
-  low:      'text-green-400',
+  critical: 'text-red-700',
+  high:     'text-orange-700',
+  moderate: 'text-yellow-700',
+  low:      'text-green-700',
 }
 
 export const riskBg: Record<RiskLevel, string> = {
-  critical: 'bg-red-500/10 border-red-500/30',
-  high:     'bg-orange-500/10 border-orange-500/30',
-  moderate: 'bg-yellow-500/10 border-yellow-500/30',
-  low:      'bg-green-500/10 border-green-500/30',
+  critical: 'bg-red-50 border-red-200',
+  high:     'bg-orange-50 border-orange-200',
+  moderate: 'bg-yellow-50 border-yellow-200',
+  low:      'bg-green-50 border-green-200',
 }
 
 export const riskBarColor: Record<RiskLevel, string> = {
-  critical: 'bg-red-500',
-  high:     'bg-orange-500',
+  critical: 'bg-red-600',
+  high:     'bg-orange-600',
   moderate: 'bg-yellow-500',
-  low:      'bg-green-500',
+  low:      'bg-green-600',
 }
 
 // ─── Displacement stories ─────────────────────────────────────────────────────

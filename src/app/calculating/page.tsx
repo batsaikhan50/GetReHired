@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { Brain, Check, PartyPopper } from 'lucide-react'
 import { useLang } from '@/contexts/LanguageContext'
-import { Star, Sparkle } from '@/components/doodle/Doodles'
 
 const stepKeys = [
   { key: 'Reading your work history',       duration: 1000 },
@@ -54,25 +53,19 @@ export default function CalculatingPage() {
   const isLast = stepIdx === stepKeys.length - 1
 
   return (
-    <div className="min-h-screen bg-[#0d0f14] flex flex-col items-center justify-center px-6 relative overflow-hidden doodle-grid">
-      {/* Ambient glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-orange-500/5 blur-[140px] pointer-events-none" />
-      <Star className="absolute top-1/4 left-1/4 w-6 h-6 text-orange-400/40 doodle-wobble" />
-      <Sparkle className="absolute bottom-1/3 right-1/4 w-5 h-5 text-orange-300/40" />
-
+    <div className="min-h-screen bg-[var(--background)] flex flex-col items-center justify-center px-6 relative overflow-hidden">
       <div className="w-full max-w-sm relative z-10">
 
         {/* Icon */}
         <div className="relative w-20 h-20 mx-auto mb-10">
-          <Sparkle className="absolute -top-1 -right-1 w-5 h-5 text-orange-300 doodle-wobble" />
           <motion.div
             animate={{ scale: done ? 1 : [1, 1.08, 1] }}
             transition={{ duration: 1.4, repeat: done ? 0 : Infinity, ease: 'easeInOut' }}
-            className="w-20 h-20 rounded-full bg-orange-500/15 border-2 border-orange-500/40 flex items-center justify-center"
+            className="w-20 h-20 rounded-full bg-white border border-[var(--border)] shadow-[0_1px_3px_rgba(28,25,23,0.06)] flex items-center justify-center"
           >
             {done
-              ? <PartyPopper className="w-9 h-9 text-orange-400" />
-              : <Brain className="w-9 h-9 text-orange-400" />}
+              ? <PartyPopper className="w-9 h-9 text-[var(--accent)]" />
+              : <Brain className="w-9 h-9 text-[var(--accent)]" />}
           </motion.div>
         </div>
 
@@ -86,7 +79,7 @@ export default function CalculatingPage() {
               exit={{ opacity: 0, y: -16 }}
               transition={{ duration: 0.35 }}
               className={`text-center text-lg font-light absolute inset-x-0 ${
-                isLast ? 'text-orange-400 font-medium' : 'text-white'
+                isLast ? 'text-[var(--accent)] font-medium' : 'text-stone-800'
               }`}
             >
               {t(currentStep.key)}
@@ -95,16 +88,16 @@ export default function CalculatingPage() {
         </div>
 
         {/* Progress bar */}
-        <div className="w-full h-1 bg-gray-800 rounded-full overflow-hidden mb-4">
+        <div className="w-full h-1 bg-stone-200 rounded-full overflow-hidden mb-4">
           <motion.div
-            className="h-full bg-gradient-to-r from-orange-600 to-orange-400 rounded-full"
+            className="h-full bg-[var(--accent)] rounded-full"
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.1, ease: 'linear' }}
           />
         </div>
 
         {/* Percentage */}
-        <p className="text-center font-doodle text-3xl text-orange-300/80 mb-12">
+        <p className="text-center font-display text-3xl text-stone-900 tabular-nums mb-12">
           {Math.round(progress)}%
         </p>
 
@@ -118,8 +111,8 @@ export default function CalculatingPage() {
               transition={{ duration: 0.3 }}
               className="flex items-center gap-3"
             >
-              <Check className="w-4 h-4 text-orange-500" />
-              <span className="text-sm text-gray-600">{t(s.key)}</span>
+              <Check className="w-4 h-4 text-[var(--accent)]" />
+              <span className="text-sm text-stone-400">{t(s.key)}</span>
             </motion.div>
           ))}
         </div>

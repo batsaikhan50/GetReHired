@@ -82,20 +82,20 @@ function JobCard({ job }: { job: Job }) {
       href={job.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex-shrink-0 w-44 h-44 flex flex-col bg-gray-900/70 border border-gray-800 rounded-2xl p-3.5 hover:border-orange-500/40 transition-colors"
+      className="flex-shrink-0 w-44 h-44 flex flex-col bg-white border border-[var(--border)] rounded-xl p-3.5 hover:border-[var(--accent)] transition-colors"
     >
       {/* Logo + company */}
       <div className="flex items-center gap-2 mb-2">
         <CompanyLogo company={job.company} logo={job.logo} />
-        <p className="text-xs text-gray-500 truncate flex-1">{job.company}</p>
+        <p className="text-xs text-stone-500 truncate flex-1">{job.company}</p>
       </div>
 
       {/* Title */}
-      <p className="text-sm text-white font-medium leading-snug line-clamp-2 flex-1">{job.title}</p>
+      <p className="text-sm text-stone-900 font-medium leading-snug line-clamp-2 flex-1">{job.title}</p>
 
       {/* Location pill */}
       {job.location && (
-        <span className="text-xs text-gray-600 bg-gray-800 px-2 py-0.5 rounded-full truncate mt-1.5 self-start max-w-full">
+        <span className="text-xs text-stone-500 bg-stone-100 px-2 py-0.5 rounded-full truncate mt-1.5 self-start max-w-full">
           📍 {job.location}
         </span>
       )}
@@ -104,9 +104,9 @@ function JobCard({ job }: { job: Job }) {
       <div className="flex items-center justify-between mt-auto pt-2">
         <div className="flex items-center gap-1">
           <img src={src.favicon} alt={src.label} className="w-3 h-3 rounded-sm" />
-          <span className="text-xs text-gray-600">{src.label}</span>
+          <span className="text-xs text-stone-400">{src.label}</span>
         </div>
-        <p className="text-xs text-orange-400 font-medium">Apply →</p>
+        <p className="text-xs text-[var(--accent)] font-medium">Apply →</p>
       </div>
     </a>
   )
@@ -118,22 +118,22 @@ function JobCard({ job }: { job: Job }) {
 function LockedJobsRow({ t }: { t: (k: string) => string }) {
   return (
     <div className="px-5 pb-5">
-      <p className="text-xs text-gray-600 uppercase tracking-widest mt-2.5 mb-3">{t('Job Offers')}</p>
+      <p className="text-[11px] text-stone-400 uppercase tracking-[0.15em] mt-2.5 mb-3">{t('Job Offers')}</p>
       <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
         {[0, 1, 2].map((i) => (
           <div key={i} className="relative flex-shrink-0 w-44 h-44">
-            <div className="blur-sm pointer-events-none select-none w-44 h-44 bg-gray-900/70 border border-gray-800 rounded-2xl p-3.5">
+            <div className="blur-sm pointer-events-none select-none w-44 h-44 bg-white border border-[var(--border)] rounded-xl p-3.5">
               <div className="flex items-center gap-2 mb-2">
-                <div className="w-7 h-7 rounded-lg bg-gray-700" />
-                <div className="h-3 w-20 bg-gray-700 rounded" />
+                <div className="w-7 h-7 rounded-lg bg-stone-200" />
+                <div className="h-3 w-20 bg-stone-200 rounded" />
               </div>
-              <div className="h-4 w-32 bg-gray-700 rounded mb-1.5" />
-              <div className="h-3 w-24 bg-gray-800 rounded mb-3" />
-              <div className="h-5 w-20 bg-gray-800 rounded-full" />
+              <div className="h-4 w-32 bg-stone-200 rounded mb-1.5" />
+              <div className="h-3 w-24 bg-stone-100 rounded mb-3" />
+              <div className="h-5 w-20 bg-stone-100 rounded-full" />
             </div>
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0d0f14]/75 rounded-2xl px-3 text-center">
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#faf8f4]/75 backdrop-blur-[1px] rounded-xl px-3 text-center">
               <span className="text-lg mb-1">🔒</span>
-              <a href={apiUrl('/api/checkout')} className="px-3 py-1.5 bg-orange-500 hover:bg-orange-400 text-white text-xs font-medium rounded-full transition-all leading-snug">
+              <a href={apiUrl('/api/checkout')} className="px-3 py-1.5 bg-stone-900 hover:bg-stone-700 text-[#faf8f4] text-xs rounded-full transition-colors leading-snug">
                 $5 — unlocks all
               </a>
             </div>
@@ -161,10 +161,10 @@ function JobsRow({ career, country, unlocked }: { career: string; country: strin
   if (loading) {
     return (
       <div className="px-5 pb-5">
-        <p className="text-xs text-gray-600 uppercase tracking-widest mt-2.5 mb-3">{t('Job Offers')}</p>
+        <p className="text-[11px] text-stone-400 uppercase tracking-[0.15em] mt-2.5 mb-3">{t('Job Offers')}</p>
         <div className="flex gap-3 overflow-x-auto pb-1">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="flex-shrink-0 w-52 h-28 bg-gray-900/50 rounded-2xl animate-pulse" />
+            <div key={i} className="flex-shrink-0 w-52 h-28 bg-stone-100 rounded-xl animate-pulse" />
           ))}
         </div>
       </div>
@@ -178,7 +178,7 @@ function JobsRow({ career, country, unlocked }: { career: string; country: strin
 
   return (
     <div className="px-5 pb-5">
-      <p className="text-xs text-gray-600 uppercase tracking-widest mt-2.5 mb-3">{t('Job Offers')}</p>
+      <p className="text-[11px] text-stone-400 uppercase tracking-[0.15em] mt-2.5 mb-3">{t('Job Offers')}</p>
       <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
         {free.map((job) => <JobCard key={job.id} job={job} />)}
 
@@ -187,9 +187,9 @@ function JobsRow({ career, country, unlocked }: { career: string; country: strin
             <div className="blur-sm pointer-events-none select-none">
               <JobCard job={job} />
             </div>
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0d0f14]/75 rounded-2xl px-3 text-center">
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#faf8f4]/75 backdrop-blur-[1px] rounded-xl px-3 text-center">
               <span className="text-lg mb-1">🔒</span>
-              <a href={apiUrl('/api/checkout')} className="px-3 py-1.5 bg-orange-500 hover:bg-orange-400 text-white text-xs font-medium rounded-full transition-all leading-snug">
+              <a href={apiUrl('/api/checkout')} className="px-3 py-1.5 bg-stone-900 hover:bg-stone-700 text-[#faf8f4] text-xs rounded-full transition-colors leading-snug">
                 $5 — unlocks all
               </a>
             </div>
@@ -211,7 +211,7 @@ function MatchCard({ match, rank, delay, country, showJobs, unlocked }: { match:
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.5 }}
-      className="bg-[#161b25] border-gray-700 rough-border overflow-hidden flex flex-col h-full"
+      className="bg-white border border-[var(--border)] rounded-xl shadow-[0_1px_3px_rgba(28,25,23,0.06)] overflow-hidden flex flex-col h-full"
     >
       {/* Header — fixed height so salary row always aligns across cards */}
       <div className="p-5 cursor-pointer" onClick={() => setExpanded((e) => !e)}>
@@ -220,19 +220,19 @@ function MatchCard({ match, rank, delay, country, showJobs, unlocked }: { match:
           <div className="flex items-start gap-3 overflow-hidden">
             <span className="text-3xl flex-shrink-0 mt-1">{match.emoji}</span>
             <div className="overflow-hidden">
-              <p className="text-xs text-gray-600 uppercase tracking-widest mb-0.5">#{rank} {t('Match')}</p>
-              <h3 className="text-lg font-medium text-white leading-snug line-clamp-2">{match.title}</h3>
-              <p className="text-sm text-gray-500">{match.field}</p>
+              <p className="text-[11px] text-stone-400 uppercase tracking-[0.15em] mb-0.5">#{rank} {t('Match')}</p>
+              <h3 className="font-display text-lg text-stone-900 leading-snug line-clamp-2">{match.title}</h3>
+              <p className="text-sm text-stone-500">{match.field}</p>
             </div>
           </div>
           {/* Score ring */}
           <div className="flex-shrink-0">
             <div className="relative w-14 h-14">
               <svg className="w-14 h-14 -rotate-90" viewBox="0 0 56 56">
-                <circle cx="28" cy="28" r="22" fill="none" stroke="#1f2937" strokeWidth="4" />
+                <circle cx="28" cy="28" r="22" fill="none" stroke="#e8e3da" strokeWidth="4" />
                 <motion.circle
                   cx="28" cy="28" r="22"
-                  fill="none" stroke="#f97316" strokeWidth="4"
+                  fill="none" stroke="#c2410c" strokeWidth="4"
                   strokeLinecap="round"
                   strokeDasharray={`${2 * Math.PI * 22}`}
                   initial={{ strokeDashoffset: 2 * Math.PI * 22 }}
@@ -241,7 +241,7 @@ function MatchCard({ match, rank, delay, country, showJobs, unlocked }: { match:
                 />
               </svg>
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="font-doodle text-xl text-orange-400 leading-none">{match.score}%</span>
+                <span className="font-display text-base text-[var(--accent)] leading-none tabular-nums">{match.score}%</span>
               </div>
             </div>
           </div>
@@ -249,13 +249,13 @@ function MatchCard({ match, rank, delay, country, showJobs, unlocked }: { match:
 
         {/* Salary + time — always at same Y position */}
         <div className="flex gap-3 mt-4">
-          <div className="flex-1 bg-gray-800/50 rounded-xl px-3 py-2">
-            <p className="text-xs text-gray-600">{t('Salary')}</p>
-            <p className="text-sm text-white font-medium">{match.salaryRange}</p>
+          <div className="flex-1 bg-stone-50 border border-[var(--border)] rounded-lg px-3 py-2">
+            <p className="text-xs text-stone-400">{t('Salary')}</p>
+            <p className="text-sm text-stone-900 font-medium">{match.salaryRange}</p>
           </div>
-          <div className="flex-1 bg-gray-800/50 rounded-xl px-3 py-2">
-            <p className="text-xs text-gray-600">{t('Time to hire')}</p>
-            <p className="text-sm text-white font-medium">{match.timeToHire}</p>
+          <div className="flex-1 bg-stone-50 border border-[var(--border)] rounded-lg px-3 py-2">
+            <p className="text-xs text-stone-400">{t('Time to hire')}</p>
+            <p className="text-sm text-stone-900 font-medium">{match.timeToHire}</p>
           </div>
         </div>
 
@@ -264,8 +264,8 @@ function MatchCard({ match, rank, delay, country, showJobs, unlocked }: { match:
           const resistance = careerAiResistance[match.title]
           if (!resistance) return null
           const lvl = getRiskLevel(100 - resistance) // invert: low automation = safe career
-          const shieldColor = resistance >= 70 ? 'text-green-400' : resistance >= 55 ? 'text-yellow-400' : 'text-orange-400'
-          const shieldBg    = resistance >= 70 ? 'bg-green-500/10 border-green-500/20' : resistance >= 55 ? 'bg-yellow-500/10 border-yellow-500/20' : 'bg-orange-500/10 border-orange-500/20'
+          const shieldColor = resistance >= 70 ? 'text-green-700' : resistance >= 55 ? 'text-yellow-700' : 'text-orange-700'
+          const shieldBg    = resistance >= 70 ? 'bg-green-50 border-green-200' : resistance >= 55 ? 'bg-yellow-50 border-yellow-200' : 'bg-orange-50 border-orange-200'
           return (
             <div className={`inline-flex items-center gap-1.5 mt-3 px-3 py-1 rounded-full border text-xs ${shieldBg} ${shieldColor}`}>
               <span>🛡️</span>
@@ -274,7 +274,7 @@ function MatchCard({ match, rank, delay, country, showJobs, unlocked }: { match:
           )
         })()}
 
-        <p className="text-xs text-gray-600 text-center mt-3">
+        <p className="text-xs text-stone-400 text-center mt-3">
           {expanded ? t('▲ Less') : t('▼ Why this fits you')}
         </p>
       </div>
@@ -284,36 +284,36 @@ function MatchCard({ match, rank, delay, country, showJobs, unlocked }: { match:
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="px-5 pb-4 border-t border-gray-800"
+          className="px-5 pb-4 border-t border-[var(--border)]"
         >
-          <p className="text-xs text-gray-600 uppercase tracking-widest mt-4 mb-2">{t('Why it fits')}</p>
+          <p className="text-[11px] text-stone-400 uppercase tracking-[0.15em] mt-4 mb-2">{t('Why it fits')}</p>
           <ul className="space-y-1.5 mb-4">
             {match.reasons.map((r, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-gray-300">
-                <span className="text-orange-500 mt-0.5">→</span>{r}
+              <li key={i} className="flex items-start gap-2 text-sm text-stone-600">
+                <span className="text-[var(--accent)] mt-0.5">→</span>{r}
               </li>
             ))}
           </ul>
-          <p className="text-xs text-gray-600 uppercase tracking-widest mb-2">{t('Skills to build')}</p>
+          <p className="text-[11px] text-stone-400 uppercase tracking-[0.15em] mb-2">{t('Skills to build')}</p>
           <div className="flex flex-wrap gap-2 mb-5">
             {match.skills.map((s, i) => (
-              <span key={i} className="px-3 py-1 bg-gray-800 border border-gray-700 rounded-full text-xs text-gray-300">{s}</span>
+              <span key={i} className="px-3 py-1 bg-stone-100 border border-stone-200 rounded-full text-xs text-stone-700">{s}</span>
             ))}
           </div>
 
           {/* Interview prep — unlocked only */}
           {unlocked && (
             <>
-              <p className="text-xs text-gray-600 uppercase tracking-widest mb-2">{t('Interview Questions')}</p>
+              <p className="text-[11px] text-stone-400 uppercase tracking-[0.15em] mb-2">{t('Interview Questions')}</p>
               <ul className="space-y-2 mb-5">
                 {match.interviewQuestions.map((q, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-gray-300">
-                    <span className="text-orange-500/60 mt-0.5 flex-shrink-0">{i + 1}.</span>{q}
+                  <li key={i} className="flex items-start gap-2 text-sm text-stone-600">
+                    <span className="text-[var(--accent)]/60 mt-0.5 flex-shrink-0">{i + 1}.</span>{q}
                   </li>
                 ))}
               </ul>
 
-              <p className="text-xs text-gray-600 uppercase tracking-widest mb-2">{t('Learning Roadmap')}</p>
+              <p className="text-[11px] text-stone-400 uppercase tracking-[0.15em] mb-2">{t('Learning Roadmap')}</p>
               <div className="flex flex-col gap-2">
                 {match.retrainingRoadmap.map((r, i) => (
                   <a
@@ -321,13 +321,13 @@ function MatchCard({ match, rank, delay, country, showJobs, unlocked }: { match:
                     href={r.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between px-3 py-2.5 bg-gray-800/60 border border-gray-700 rounded-xl hover:border-orange-500/40 transition-colors group"
+                    className="flex items-center justify-between px-3 py-2.5 bg-stone-50 border border-[var(--border)] rounded-lg hover:border-[var(--accent)] transition-colors group"
                   >
                     <div>
-                      <p className="text-sm text-white">{r.skill}</p>
-                      <p className="text-xs text-gray-500">{r.platform} · Free</p>
+                      <p className="text-sm text-stone-900">{r.skill}</p>
+                      <p className="text-xs text-stone-400">{r.platform} · Free</p>
                     </div>
-                    <span className="text-orange-400 text-xs group-hover:translate-x-0.5 transition-transform">→</span>
+                    <span className="text-[var(--accent)] text-xs group-hover:translate-x-0.5 transition-transform">→</span>
                   </a>
                 ))}
               </div>
@@ -338,7 +338,7 @@ function MatchCard({ match, rank, delay, country, showJobs, unlocked }: { match:
 
       {/* Job offers — pinned to bottom */}
       {showJobs && (
-        <div className="border-t border-gray-800/60 mt-auto">
+        <div className="border-t border-[var(--border)] mt-auto">
           {rank === 1 || unlocked
             ? <JobsRow career={match.title} country={country} unlocked={unlocked} />
             : <LockedJobsRow t={t} />
@@ -351,7 +351,7 @@ function MatchCard({ match, rank, delay, country, showJobs, unlocked }: { match:
 
 function LockedLabel() {
   const { t } = useLang()
-  return <p className="text-xs text-gray-500">{t('Unlock to reveal')}</p>
+  return <p className="text-xs text-stone-500">{t('Unlock to reveal')}</p>
 }
 
 // ─── Locked card ──────────────────────────────────────────────────────────────
@@ -362,26 +362,26 @@ function LockedCard({ rank, delay }: { rank: number; delay: number }) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.4 }}
-      className="relative bg-[#161b25] border border-gray-800 rounded-3xl overflow-hidden"
+      className="relative bg-white border border-[var(--border)] rounded-xl overflow-hidden"
     >
       <div className="p-5 blur-sm select-none pointer-events-none">
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gray-700" />
+            <div className="w-10 h-10 rounded-full bg-stone-200" />
             <div>
-              <p className="text-xs text-gray-600 mb-0.5">#{rank} Match</p>
-              <div className="h-4 w-32 bg-gray-700 rounded mb-1" />
-              <div className="h-3 w-20 bg-gray-800 rounded" />
+              <p className="text-xs text-stone-400 mb-0.5">#{rank} Match</p>
+              <div className="h-4 w-32 bg-stone-200 rounded mb-1" />
+              <div className="h-3 w-20 bg-stone-100 rounded" />
             </div>
           </div>
-          <div className="w-14 h-14 rounded-full bg-gray-800" />
+          <div className="w-14 h-14 rounded-full bg-stone-100" />
         </div>
         <div className="flex gap-3 mt-4">
-          <div className="flex-1 h-12 bg-gray-800/50 rounded-xl" />
-          <div className="flex-1 h-12 bg-gray-800/50 rounded-xl" />
+          <div className="flex-1 h-12 bg-stone-100 rounded-lg" />
+          <div className="flex-1 h-12 bg-stone-100 rounded-lg" />
         </div>
       </div>
-      <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0d0f14]/60">
+      <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#faf8f4]/70 backdrop-blur-[1px]">
         <span className="text-2xl mb-1">🔒</span>
         <LockedLabel />
       </div>
@@ -428,13 +428,13 @@ function ShareSection({ matches, t }: { matches: CareerMatch[]; t: (k: string) =
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.75 }}
-      className="mt-8 bg-[#161b25] border-gray-700 rough-border-2 p-5 text-center"
+      className="mt-8 bg-white border border-[var(--border)] rounded-xl p-5 text-center"
     >
-      <p className="text-white font-medium mb-1">🔗 {t('Share your results')}</p>
-      <p className="text-gray-500 text-sm mb-4">{t('Know someone whose job changed? Send them their own path.')}</p>
+      <p className="text-stone-900 font-medium mb-1">🔗 {t('Share your results')}</p>
+      <p className="text-stone-500 text-sm mb-4">{t('Know someone whose job changed? Send them their own path.')}</p>
       <button
         onClick={share}
-        className="w-full py-3 bg-gray-800 hover:bg-gray-700 text-white font-medium rough-border-2 border-gray-600 transition-colors"
+        className="w-full py-3 border border-stone-300 hover:border-stone-500 text-stone-800 rounded-md transition-colors"
       >
         {copied ? `✓ ${t('Link copied')}` : t('Share')}
       </button>
@@ -469,13 +469,13 @@ function EmailSection({ matches, name, t, unlocked }: { matches: CareerMatch[]; 
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.8 }}
-      className="mt-8 bg-[#161b25] border-gray-700 rough-border p-5 text-center"
+      className="mt-8 bg-white border border-[var(--border)] rounded-xl p-5 text-center"
     >
-      <p className="text-white font-medium mb-1">📩 {t('Email my results')}</p>
-      <p className="text-gray-500 text-sm mb-4">{t('Get your matches, interview prep and learning roadmap in your inbox.')}</p>
+      <p className="text-stone-900 font-medium mb-1">📩 {t('Email my results')}</p>
+      <p className="text-stone-500 text-sm mb-4">{t('Get your matches, interview prep and learning roadmap in your inbox.')}</p>
 
       {status === 'sent' ? (
-        <p className="text-orange-400 font-medium">✓ {t('Sent! Check your inbox.')}</p>
+        <p className="text-green-700 font-medium">✓ {t('Sent! Check your inbox.')}</p>
       ) : (
         <div className="flex gap-2">
           <input
@@ -483,25 +483,25 @@ function EmailSection({ matches, name, t, unlocked }: { matches: CareerMatch[]; 
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder={t('your@email.com')}
-            className="flex-1 bg-gray-900 border border-gray-700 rounded-full px-4 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-orange-500 transition-colors"
+            className="flex-1 bg-white border border-[var(--border)] rounded-md px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:outline-none focus:border-[var(--accent)] transition-colors"
           />
           <div className="relative group">
             {!unlocked && (
-              <span className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-gray-800 border border-gray-600 px-2.5 py-1 text-xs text-orange-300 opacity-0 group-hover:opacity-100 transition-opacity">
+              <span className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-stone-900 px-2.5 py-1 text-xs text-[#faf8f4] opacity-0 group-hover:opacity-100 transition-opacity">
                 🔒 {t('need to pay')}
               </span>
             )}
             <button
               onClick={send}
               disabled={unlocked && (status === 'sending' || !email.includes('@'))}
-              className="px-5 py-2.5 bg-orange-500 hover:bg-orange-400 disabled:bg-gray-800 disabled:text-gray-600 text-white text-sm font-medium rough-border-2 border-orange-300 transition-all"
+              className="px-5 py-2.5 bg-stone-900 hover:bg-stone-700 disabled:bg-stone-200 disabled:text-stone-400 text-[#faf8f4] text-sm rounded-md transition-colors"
             >
               {status === 'sending' ? '...' : t('Send')}
             </button>
           </div>
         </div>
       )}
-      {status === 'error' && <p className="text-red-400 text-xs mt-2">{t('Something went wrong. Try again.')}</p>}
+      {status === 'error' && <p className="text-red-600 text-xs mt-2">{t('Something went wrong. Try again.')}</p>}
     </motion.div>
   )
 }
@@ -545,17 +545,17 @@ function ThreatAssessment({ answers }: { answers: Answers }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`rough-border p-5 mb-8 ${riskBg[riskLevel]}`}
+      className={`border rounded-xl p-5 mb-8 ${riskBg[riskLevel]}`}
     >
-      <p className="text-xs text-gray-500 uppercase tracking-widest mb-3">{t('The honest picture')}</p>
+      <p className="text-[11px] text-stone-500 uppercase tracking-[0.15em] mb-3">{t('The honest picture')}</p>
 
       {/* Risk bar */}
       <div className="mb-5">
         <div className="flex items-end justify-between mb-1.5">
-          <p className="text-white font-semibold text-lg">{t(jobTitle)}</p>
+          <p className="font-display text-stone-900 text-lg">{t(jobTitle)}</p>
           <span className={`text-3xl font-bold ${riskColors[riskLevel]}`}>{jobRisk}%</span>
         </div>
-        <div className="w-full h-2.5 bg-gray-800 rounded-full overflow-hidden mb-1.5">
+        <div className="w-full h-2.5 bg-stone-200/80 rounded-full overflow-hidden mb-1.5">
           <motion.div
             className={`h-full rounded-full ${riskBarColor[riskLevel]}`}
             initial={{ width: 0 }}
@@ -570,18 +570,18 @@ function ThreatAssessment({ answers }: { answers: Answers }) {
 
       {/* Why — specific technology */}
       <div className="mb-5">
-        <p className="text-xs text-gray-600 uppercase tracking-widest mb-2">{t("Why it's happening")}</p>
-        <p className="text-sm text-gray-300 leading-relaxed">{story.why}</p>
+        <p className="text-[11px] text-stone-400 uppercase tracking-[0.15em] mb-2">{t("Why it's happening")}</p>
+        <p className="text-sm text-stone-600 leading-relaxed">{story.why}</p>
       </div>
 
       {/* At-risk tasks from user's answers */}
       {atRiskTasks.length > 0 && (
         <div className="mb-5">
-          <p className="text-xs text-gray-600 uppercase tracking-widest mb-2">{t('Your tasks being replaced')}</p>
+          <p className="text-[11px] text-stone-400 uppercase tracking-[0.15em] mb-2">{t('Your tasks being replaced')}</p>
           <div className="flex flex-col gap-1.5">
             {atRiskTasks.map((tk) => (
               <div key={tk.label} className="flex items-center justify-between">
-                <span className="text-sm text-gray-400">{t(tk.label)}</span>
+                <span className="text-sm text-stone-600">{t(tk.label)}</span>
                 <span className={`text-xs font-semibold ${riskColors[getRiskLevel(tk.risk)]}`}>{tk.risk}%</span>
               </div>
             ))}
@@ -589,16 +589,16 @@ function ThreatAssessment({ answers }: { answers: Answers }) {
         </div>
       )}
 
-      <div className="border-t border-gray-700/40 my-4" />
+      <div className="border-t border-[var(--rule)] my-4" />
 
       {/* What survives */}
       <div className="mb-5">
-        <p className="text-xs text-gray-600 uppercase tracking-widest mb-2">{t("What machines still can't take from you")}</p>
-        <p className="text-sm text-gray-300 leading-relaxed mb-3">{story.survives}</p>
+        <p className="text-[11px] text-stone-400 uppercase tracking-[0.15em] mb-2">{t("What machines still can't take from you")}</p>
+        <p className="text-sm text-stone-600 leading-relaxed mb-3">{story.survives}</p>
         {safeUserSkills.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {safeUserSkills.map((s) => (
-              <span key={s.label} className="px-3 py-1 bg-green-500/10 border border-green-500/30 rounded-full text-xs text-green-400">
+              <span key={s.label} className="px-3 py-1 bg-green-50 border border-green-200 rounded-full text-xs text-green-800">
                 {t(s.label)}
               </span>
             ))}
@@ -607,16 +607,16 @@ function ThreatAssessment({ answers }: { answers: Answers }) {
       </div>
 
       {/* The one thing to add */}
-      <div className="mb-5 bg-[#0d0f14]/60 rounded-2xl p-4">
+      <div className="mb-5 bg-white/70 border border-[var(--border)] rounded-lg p-4">
         <p className="text-xs text-gray-600 uppercase tracking-widest mb-1.5">{t('The one thing to add')}</p>
-        <p className="text-sm text-white leading-relaxed">{story.add}</p>
+        <p className="text-sm text-stone-900 leading-relaxed">{story.add}</p>
       </div>
 
       {/* Transition story — collapsed by default */}
       <button onClick={() => setExpanded((e) => !e)} className="w-full text-left">
-        <p className="text-xs text-gray-500 uppercase tracking-widest mb-2 flex items-center gap-2">
+        <p className="text-[11px] text-stone-500 uppercase tracking-[0.15em] mb-2 flex items-center gap-2">
           {t('Someone who made this jump')}
-          <span className="text-gray-600">{expanded ? '▲' : '▼'}</span>
+          <span className="text-stone-400">{expanded ? '▲' : '▼'}</span>
         </p>
       </button>
 
@@ -624,12 +624,12 @@ function ThreatAssessment({ answers }: { answers: Answers }) {
         <motion.div
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-[#0d0f14]/60 rounded-2xl p-4"
+          className="bg-white/70 border border-[var(--border)] rounded-lg p-4"
         >
-          <p className="text-sm font-medium text-white mb-0.5">{story.story.person}</p>
-          <p className="text-xs text-orange-400 mb-3">{story.story.path}</p>
-          <p className="text-sm text-gray-400 leading-relaxed mb-2">{story.story.how}</p>
-          <p className="text-sm text-green-400 font-medium">{story.story.win}</p>
+          <p className="text-sm font-medium text-stone-900 mb-0.5">{story.story.person}</p>
+          <p className="text-xs text-[var(--accent)] mb-3">{story.story.path}</p>
+          <p className="text-sm text-stone-600 leading-relaxed mb-2">{story.story.how}</p>
+          <p className="text-sm text-green-700 font-medium">{story.story.win}</p>
         </motion.div>
       )}
     </motion.div>
@@ -701,10 +701,9 @@ export default function ResultsPage() {
   const locked = unlocked ? [] : matches.slice(3)
 
   return (
-    <div className="min-h-screen bg-[#0d0f14] px-4 py-10 relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full bg-orange-500/5 blur-[120px] pointer-events-none" />
+    <div className="min-h-screen bg-[var(--background)] px-4 py-10 relative overflow-hidden">
       <div className="fixed right-5 top-[calc(1.25rem+var(--safe-top))] z-50">
-        <LanguageToggle />
+        <LanguageToggle variant="light" />
       </div>
 
       <div className="max-w-5xl mx-auto relative z-10">
@@ -715,17 +714,17 @@ export default function ResultsPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
-          <p className="text-xs text-orange-500 uppercase tracking-widest font-medium mb-2">{t('Results')}</p>
-          <h1 className="text-3xl font-light text-white mb-2">
-            <span className="font-doodle text-orange-400 text-5xl">{name}</span>{t("'s Escape Plan")}
+          <p className="text-xs text-stone-500 uppercase tracking-[0.18em] mb-2">{t('Results')}</p>
+          <h1 className="font-display text-3xl text-stone-900 mb-2">
+            <span className="font-display italic text-[var(--accent)] text-4xl">{name}</span>{t("'s Escape Plan")}
           </h1>
-          <p className="text-sm text-gray-500">{t("Here's where you stand — and where you can go")}</p>
+          <p className="text-sm text-stone-500">{t("Here's where you stand — and where you can go")}</p>
 
         </motion.div>
 
         {/* Checkout fallback notice */}
         {payNotice && (
-          <div className="mb-6 px-4 py-3 rounded-2xl bg-yellow-500/10 border border-yellow-500/30 text-yellow-300 text-sm text-center">
+          <div className="mb-6 px-4 py-3 rounded-lg bg-yellow-50 border border-yellow-300 text-yellow-800 text-sm text-center">
             {payNotice}
           </div>
         )}
@@ -745,19 +744,19 @@ export default function ResultsPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="bg-gradient-to-b from-orange-500/10 to-transparent border border-orange-500/30 rounded-2xl p-6 mb-4 text-center"
+            className="bg-white border border-stone-900 rounded-xl p-6 mb-4 text-center"
           >
-            <p className="text-orange-400 font-semibold text-lg mb-1">{locked.length} {t('more matches waiting')}</p>
-            <p className="text-gray-400 text-sm mb-5">
+            <p className="font-display text-stone-900 text-xl mb-1">{locked.length} {t('more matches waiting')}</p>
+            <p className="text-stone-500 text-sm mb-5">
               {t('See every career path ranked for you — plus skills roadmap, salary insights, and live job listings for each.')}
             </p>
             <a
               href={apiUrl('/api/checkout')}
-              className="block w-full py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-lg text-base transition-colors"
+              className="block w-full py-3.5 bg-stone-900 hover:bg-stone-700 text-[#faf8f4] rounded-md text-base transition-colors"
             >
               {t('Unlock All Matches — $5')}
             </a>
-            <p className="text-xs text-gray-600 mt-3">{t('One-time payment. No subscription.')}</p>
+            <p className="text-xs text-stone-400 mt-3">{t('One-time payment. No subscription.')}</p>
           </motion.div>
         )}
 

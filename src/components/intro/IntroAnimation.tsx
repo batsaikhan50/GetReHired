@@ -49,17 +49,12 @@ export default function IntroAnimation() {
   const slide = { ...slideKey, text: t(slideKey.text), sub: slideKey.sub ? t(slideKey.sub) : null }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#0d0f14] px-6 relative overflow-hidden select-none" onClick={handleNext}>
-      {/* Background glow */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-orange-500/5 blur-[120px]" />
-      </div>
-
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[var(--background)] px-6 relative overflow-hidden select-none" onClick={handleNext}>
       {/* Skip button */}
       {current < slideKeys.length - 1 && (
         <button
           onClick={(e) => { e.stopPropagation(); handleSkip() }}
-          className="absolute top-6 right-6 text-sm text-gray-500 hover:text-gray-300 transition-colors"
+          className="absolute right-6 top-[calc(1.5rem+var(--safe-top))] text-sm text-stone-400 hover:text-stone-600 transition-colors"
         >
           {t('Skip intro →')}
         </button>
@@ -79,14 +74,14 @@ export default function IntroAnimation() {
             <p
               className={`leading-tight tracking-tight ${
                 slide.highlight
-                  ? 'font-doodle text-4xl md:text-6xl text-orange-400'
-                  : 'text-2xl md:text-4xl font-light text-white'
+                  ? 'font-display italic text-4xl md:text-6xl text-[var(--accent)]'
+                  : 'font-display text-3xl md:text-5xl text-stone-900'
               }`}
             >
               {slide.text}
             </p>
             {slide.sub && (
-              <p className="text-lg md:text-xl text-gray-400 font-light">
+              <p className="text-lg md:text-xl text-stone-500">
                 {slide.sub}
               </p>
             )}
@@ -99,11 +94,11 @@ export default function IntroAnimation() {
               >
                 <button
                   onClick={(e) => { e.stopPropagation(); handleStart() }}
-                  className="px-10 py-4 bg-orange-500 hover:bg-orange-400 text-white text-lg font-medium rough-border border-orange-300 transition-all duration-200 hover:scale-105 shadow-lg shadow-orange-500/20"
+                  className="px-9 py-4 bg-stone-900 hover:bg-stone-700 text-[#faf8f4] text-lg rounded-md transition-colors"
                 >
                   {t('Start Your Journey →')}
                 </button>
-                <p className="text-sm text-gray-500">{t('Free to start. Takes about 15–30 minutes.')}</p>
+                <p className="text-sm text-stone-400">{t('Free to start. Takes about 15–30 minutes.')}</p>
               </motion.div>
             )}
           </motion.div>
@@ -111,8 +106,8 @@ export default function IntroAnimation() {
       </div>
 
       {/* Language toggle */}
-      <div className="absolute top-5 left-5">
-        <LanguageToggle />
+      <div className="absolute left-5 top-[calc(1.25rem+var(--safe-top))]">
+        <LanguageToggle variant="light" />
       </div>
 
       {/* Progress dots */}
@@ -122,7 +117,7 @@ export default function IntroAnimation() {
             key={i}
             onClick={(e) => { e.stopPropagation(); setCurrent(i) }}
             className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              i === current ? 'bg-orange-500 w-6' : 'bg-gray-600'
+              i === current ? 'bg-[var(--accent)] w-6' : 'bg-stone-300'
             }`}
           />
         ))}
@@ -134,7 +129,7 @@ export default function IntroAnimation() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.0, duration: 0.6 }}
-          className="absolute bottom-20 text-sm text-gray-500 animate-pulse"
+          className="absolute bottom-20 text-sm text-stone-400 animate-pulse"
         >
           {t('Tap anywhere to continue')}
         </motion.p>
