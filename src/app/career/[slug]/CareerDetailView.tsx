@@ -7,7 +7,8 @@ import { ArrowRight, CircleDollarSign, Clock, GraduationCap, MessagesSquare, Bri
 import { MarketingShell } from '@/components/site/MarketingShell'
 import { calculateMatches, type CareerDetail } from '@/lib/scoringEngine'
 import { fieldIcon } from '@/lib/careerIcons'
-import { apiUrl } from '@/lib/api'
+import { apiUrl, PAYMENT_MOCK } from '@/lib/api'
+import { sampleJobs } from '@/lib/sampleJobs'
 import { useLang } from '@/contexts/LanguageContext'
 import { Star } from '@/components/doodle/Doodles'
 
@@ -40,6 +41,7 @@ export function CareerDetailView({ detail }: { detail: CareerDetail }) {
 
   // Live job openings for this career.
   useEffect(() => {
+    if (PAYMENT_MOCK) { setJobs(sampleJobs(detail.title)); setJobsLoading(false); return }
     let cancelled = false
     setJobsLoading(true)
     fetch(apiUrl(`/api/jobs?career=${encodeURIComponent(detail.title)}&country=${encodeURIComponent(country)}`))

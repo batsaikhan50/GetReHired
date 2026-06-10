@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { blocks, totalQuestions, Question, jobTitlesByIndustry } from '@/lib/assessmentData'
@@ -177,6 +177,7 @@ function RewardBottomSheet({ blockId, answers, onContinue, t }: {
 export default function AssessmentPage() {
   const router = useRouter()
   const { t } = useLang()
+  const carouselRef = useRef<HTMLDivElement>(null)
   const [blockIdx, setBlockIdx] = useState(0)
   const [questionIdx, setQuestionIdx] = useState(0)
   const [showReward, setShowReward] = useState(false)
@@ -242,6 +243,13 @@ export default function AssessmentPage() {
     setFeedbacks({})
     setResume(null)
   }
+
+  // Long option lists leave the card carousel scrolled down; show each
+  // question from the top. The carousel div is the scroller, not the window.
+  useEffect(() => {
+    window.scrollTo(0, 0)
+    carouselRef.current?.scrollTo(0, 0)
+  }, [blockIdx, questionIdx])
 
   // Lock back button (popstate) while answering — swipe gesture blocked via layout CSS
   useEffect(() => {
@@ -448,7 +456,7 @@ export default function AssessmentPage() {
       )}
 
       {/* Card Carousel */}
-      <div className="relative flex-1 overflow-x-hidden flex items-start justify-center pt-12">
+      <div ref={carouselRef} className="relative flex-1 overflow-x-hidden flex items-start justify-center pt-12">
         {block.questions.map((q, idx) => {
           const offset = idx - questionIdx
           if (Math.abs(offset) > 1) return null

@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { calculateMatches, careerSlug, CareerMatch } from '@/lib/scoringEngine'
 import { apiUrl, checkoutUrl, PAYMENT_MOCK } from '@/lib/api'
+import { sampleJobs } from '@/lib/sampleJobs'
 import { LanguageToggle } from '@/components/LanguageToggle'
 import { useLang } from '@/contexts/LanguageContext'
 import {
@@ -161,6 +162,7 @@ function JobsRow({ career, country, unlocked }: { career: string; country: strin
   const { t } = useLang()
 
   useEffect(() => {
+    if (PAYMENT_MOCK) { setJobs(sampleJobs(career)); setLoading(false); return }
     fetch(apiUrl(`/api/jobs?career=${encodeURIComponent(career)}&country=${encodeURIComponent(country)}`))
       .then((r) => r.json())
       .then((data) => { setJobs(data); setLoading(false) })
