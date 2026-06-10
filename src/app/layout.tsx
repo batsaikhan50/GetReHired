@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Caveat } from "next/font/google";
+import { Geist, Geist_Mono, Caveat, Fraunces } from "next/font/google";
 import { Providers } from "@/components/Providers";
 import "./globals.css";
 
@@ -20,13 +20,21 @@ const caveat = Caveat({
   weight: ["400", "500", "600", "700"],
 });
 
+// Editorial serif for display headlines (marketing surface).
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+});
+
 // viewportFit cover lets the app draw edge-to-edge on notched phones; fixed
 // chrome offsets itself with the --safe-top/--safe-bottom vars (globals.css).
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#0d0f14",
+  themeColor: "#faf8f4",
 };
 
 export const metadata: Metadata = {
@@ -43,7 +51,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${caveat.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${caveat.variable} ${fraunces.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <Providers>{children}</Providers>

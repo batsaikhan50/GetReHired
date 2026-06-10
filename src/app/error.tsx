@@ -16,31 +16,28 @@ export default function Error({
   }, [error])
 
   return (
-    <div className="min-h-screen bg-[#0d0f14] flex flex-col items-center justify-center px-6 relative overflow-hidden text-center">
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-orange-500/5 blur-[120px] pointer-events-none" />
-
-      <div className="relative z-10 max-w-md">
-        <p className="text-5xl mb-4">⚠️</p>
-        <h1 className="text-2xl font-light text-white mb-3">Something went wrong</h1>
-        <p className="text-sm text-gray-500 mb-8">
+    <div className="min-h-screen bg-[var(--background)] flex flex-col items-center justify-center px-6 text-center">
+      <div className="max-w-md">
+        <h1 className="font-display text-2xl text-stone-900 mb-3">Something went wrong</h1>
+        <p className="text-sm text-stone-500 mb-8">
           An unexpected error occurred. You can try again — your answers are saved.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <button
             onClick={() => unstable_retry()}
-            className="px-6 py-3 bg-orange-500 hover:bg-orange-400 text-white text-sm font-medium rough-border border-orange-300 transition-all hover:scale-[1.03]"
+            className="px-6 py-3 bg-stone-900 hover:bg-stone-700 text-[#faf8f4] text-sm rounded-md transition-colors"
           >
             Try again
           </button>
           <a
             href="/"
-            className="px-6 py-3 border-gray-600 hover:border-gray-400 text-gray-300 text-sm font-medium rough-border-2 transition-colors"
+            className="px-6 py-3 border border-stone-300 hover:border-stone-500 text-stone-700 text-sm rounded-md transition-colors"
           >
             Back to home
           </a>
         </div>
         {error.digest && (
-          <p className="mt-6 text-xs text-gray-700">Reference: {error.digest}</p>
+          <p className="mt-6 text-xs text-stone-400">Reference: {error.digest}</p>
         )}
       </div>
     </div>

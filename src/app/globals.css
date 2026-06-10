@@ -1,13 +1,17 @@
 @import "tailwindcss";
 
+/* Editorial light theme: warm paper, ink text, one terracotta accent.
+   (App-flow pages still carry their own dark backgrounds until they are
+   converted — they don't read these surface tokens.) */
 :root {
-  --background: #0d0f14;
-  --foreground: #f0f0f0;
-  --accent: #f97316;
-  --accent-soft: #fb923c;
-  --muted: #6b7280;
-  --card: #161b25;
-  --border: #1f2937;
+  --background: #faf8f4;
+  --foreground: #1c1917;
+  --accent: #c2410c;
+  --accent-soft: #ea580c;
+  --muted: #78716c;
+  --card: #ffffff;
+  --border: #e8e3da;
+  --rule: #d9d3c7; /* hairline rules between editorial sections */
   /* Notch / Dynamic Island / home-indicator insets (0 outside the mobile apps) */
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -23,14 +27,22 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-doodle: var(--font-caveat);
+  --font-display: var(--font-fraunces);
 }
 
 html, body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   overscroll-behavior-x: none;
   touch-action: pan-y;
+}
+
+/* Serif display face for headlines */
+.font-display {
+  font-family: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  letter-spacing: -0.01em;
+  font-feature-settings: "ss01";
 }
 
 * {

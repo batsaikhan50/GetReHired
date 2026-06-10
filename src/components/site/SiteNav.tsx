@@ -20,29 +20,28 @@ export function SiteNav() {
   ]
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 bg-[#0d0f14]/80 backdrop-blur-md border-b border-gray-800/60 pt-[var(--safe-top)]">
-      <nav className="max-w-6xl mx-auto flex items-center justify-between px-4 sm:px-6 h-16">
-        {/* Logo */}
-        <Link href="/" className="flex items-baseline gap-1 group">
-          <span className="text-lg font-semibold text-white tracking-tight">GetRe</span>
-          <span className="font-doodle text-2xl text-orange-400 leading-none">Hired</span>
+    <header className="fixed top-0 inset-x-0 z-50 bg-[#faf8f4]/90 backdrop-blur-md border-b border-[var(--rule)] pt-[var(--safe-top)]">
+      <nav className="max-w-5xl mx-auto flex items-center justify-between px-5 sm:px-8 h-16">
+        {/* Wordmark */}
+        <Link href="/" className="font-display text-xl text-stone-900">
+          GetRe<span className="italic text-[var(--accent)]">Hired</span>
         </Link>
 
         {/* Desktop links */}
-        <div className="hidden sm:flex items-center gap-7">
+        <div className="hidden sm:flex items-center gap-8">
           {links.map((l) => (
             <Link
               key={l.href}
               href={l.href}
-              className="text-sm text-gray-400 hover:text-white transition-colors"
+              className="text-sm text-stone-600 hover:text-stone-900 transition-colors"
             >
               {l.label}
             </Link>
           ))}
-          <LanguageToggle />
+          <LanguageToggle variant="light" />
           <Link
             href="/assessment"
-            className="px-4 py-2 bg-orange-500 hover:bg-orange-400 text-white text-sm font-medium rough-border border-orange-300 transition-all hover:scale-[1.03]"
+            className="px-4 py-2 bg-stone-900 hover:bg-stone-700 text-[#faf8f4] text-sm rounded-md transition-colors"
           >
             {t('Start Free')}
           </Link>
@@ -50,11 +49,11 @@ export function SiteNav() {
 
         {/* Mobile toggle */}
         <div className="flex sm:hidden items-center gap-3">
-          <LanguageToggle />
+          <LanguageToggle variant="light" />
           <button
             aria-label="Menu"
             onClick={() => setOpen((o) => !o)}
-            className="text-gray-300 p-1.5 -mr-1.5"
+            className="text-stone-700 p-1.5 -mr-1.5"
           >
             <span className="block w-5 h-px bg-current mb-1.5" />
             <span className="block w-5 h-px bg-current mb-1.5" />
@@ -65,13 +64,13 @@ export function SiteNav() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="sm:hidden border-t border-gray-800/60 px-4 py-4 flex flex-col gap-1 bg-[#0d0f14]">
+        <div className="sm:hidden border-t border-[var(--rule)] px-5 py-4 flex flex-col gap-1 bg-[#faf8f4]">
           {links.map((l) => (
             <Link
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
-              className="py-2.5 text-sm text-gray-300 hover:text-white"
+              className="py-2.5 text-sm text-stone-700 hover:text-stone-900"
             >
               {l.label}
             </Link>
@@ -79,7 +78,7 @@ export function SiteNav() {
           <Link
             href="/assessment"
             onClick={() => setOpen(false)}
-            className="mt-2 px-4 py-2.5 bg-orange-500 text-white text-sm font-medium rounded-full text-center"
+            className="mt-2 px-4 py-2.5 bg-stone-900 text-[#faf8f4] text-sm rounded-md text-center"
           >
             {t('Start Free')}
           </Link>

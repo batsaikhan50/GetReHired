@@ -18,8 +18,8 @@ export default function GlobalError({
         <div
           style={{
             minHeight: '100vh',
-            background: '#0d0f14',
-            color: '#f0f0f0',
+            background: '#faf8f4',
+            color: '#1c1917',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -33,19 +33,19 @@ export default function GlobalError({
           <h1 style={{ fontWeight: 300, fontSize: 24, marginBottom: 12 }}>
             Something went wrong
           </h1>
-          <p style={{ color: '#6b7280', fontSize: 14, marginBottom: 32, maxWidth: 400 }}>
+          <p style={{ color: '#78716c', fontSize: 14, marginBottom: 32, maxWidth: 400 }}>
             A critical error occurred. Please try again.
           </p>
           <button
             onClick={() => unstable_retry()}
             style={{
               padding: '12px 24px',
-              background: '#f97316',
-              color: '#fff',
+              background: '#1c1917',
+              color: '#faf8f4',
               fontSize: 14,
               fontWeight: 500,
               border: 'none',
-              borderRadius: 9999,
+              borderRadius: 6,
               cursor: 'pointer',
             }}
           >

@@ -52,9 +52,10 @@ export default function PrivacyPage() {
 
         <h2>Your choices</h2>
         <p>
-          Your assessment answers live in your own browser session. You can clear them at any time
-          by clearing your browser data. If you created an account, you can request deletion of your
-          stored results by contacting us.
+          Your assessment answers live in your own browser session — there are no accounts and we
+          keep no profile of you. You can clear your answers at any time by clearing your browser
+          data. If you emailed yourself a report and want the address removed from our email
+          provider&apos;s logs, contact us.
         </p>
 
         <h2>Contact</h2>

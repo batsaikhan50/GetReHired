@@ -9,16 +9,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <!-- Always-dark theme: the app UI is dark regardless of system setting,
-         so the window background and system-bar areas must match #0d0f14. -->
-    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.NoActionBar">
+    <!-- Always-light theme matching the editorial paper background (#faf8f4)
+         regardless of the system dark-mode setting. -->
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:background">@null</item>
-        <item name="android:windowBackground">#0d0f14</item>
-        <item name="android:statusBarColor">#0d0f14</item>
-        <item name="android:navigationBarColor">#0d0f14</item>
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowBackground">#faf8f4</item>
+        <item name="android:statusBarColor">#faf8f4</item>
+        <item name="android:navigationBarColor">#faf8f4</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
 

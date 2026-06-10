@@ -9,10 +9,18 @@ const options: { lang: Lang; flag: string; label: string }[] = [
   { lang: 'mn', flag: '🇲🇳', label: 'Монгол' },
 ]
 
-export function LanguageToggle({ className = '' }: { className?: string }) {
+export function LanguageToggle({
+  className = '',
+  variant = 'dark',
+}: {
+  className?: string
+  // 'dark' for the app-flow pages, 'light' for the editorial marketing surface.
+  variant?: 'dark' | 'light'
+}) {
   const { lang, setLang } = useLang()
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
+  const light = variant === 'light'
 
   const current = options.find((o) => o.lang === lang) || options[0]
 
@@ -30,27 +38,35 @@ export function LanguageToggle({ className = '' }: { className?: string }) {
       {/* Trigger */}
       <button
         onClick={(e) => { e.stopPropagation(); setOpen((o) => !o) }}
-        className="flex items-center gap-1.5 px-2.5 py-1.5 bg-gray-900/80 border border-gray-700 rounded-full text-sm hover:border-gray-500 transition-colors"
+        className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-sm transition-colors border ${
+          light
+            ? 'bg-white border-stone-200 hover:border-stone-400'
+            : 'bg-gray-900/80 border-gray-700 hover:border-gray-500'
+        }`}
       >
         <span>{current.flag}</span>
-        <span className="text-gray-300 text-xs font-medium">{current.lang.toUpperCase()}</span>
-        <span className="text-gray-600 text-xs">{open ? '▲' : '▼'}</span>
+        <span className={`text-xs font-medium ${light ? 'text-stone-700' : 'text-gray-300'}`}>{current.lang.toUpperCase()}</span>
+        <span className={`text-xs ${light ? 'text-stone-400' : 'text-gray-600'}`}>{open ? '▲' : '▼'}</span>
       </button>
 
       {/* Dropdown */}
       {open && (
-        <div className="absolute top-full mt-1.5 left-0 bg-gray-900 border border-gray-700 rounded-xl overflow-hidden shadow-xl z-50 min-w-[130px]">
+        <div className={`absolute top-full mt-1.5 left-0 rounded-xl overflow-hidden shadow-xl z-50 min-w-[130px] border ${
+          light ? 'bg-white border-stone-200' : 'bg-gray-900 border-gray-700'
+        }`}>
           {options.map((o) => (
             <button
               key={o.lang}
               onClick={(e) => { e.stopPropagation(); setLang(o.lang); setOpen(false) }}
-              className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm transition-colors hover:bg-gray-800 ${
-                lang === o.lang ? 'text-orange-400' : 'text-gray-300'
+              className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm transition-colors ${
+                light
+                  ? `hover:bg-stone-100 ${lang === o.lang ? 'text-[var(--accent)]' : 'text-stone-700'}`
+                  : `hover:bg-gray-800 ${lang === o.lang ? 'text-orange-400' : 'text-gray-300'}`
               }`}
             >
               <span className="text-base">{o.flag}</span>
               <span className="text-xs">{o.label}</span>
-              {lang === o.lang && <span className="ml-auto text-orange-500 text-xs">✓</span>}
+              {lang === o.lang && <span className={`ml-auto text-xs ${light ? 'text-[var(--accent)]' : 'text-orange-500'}`}>✓</span>}
             </button>
           ))}
         </div>
