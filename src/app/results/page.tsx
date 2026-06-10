@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { calculateMatches, careerSlug, CareerMatch } from '@/lib/scoringEngine'
+import { apiUrl } from '@/lib/api'
 import { LanguageToggle } from '@/components/LanguageToggle'
 import { useLang } from '@/contexts/LanguageContext'
 import {
@@ -132,7 +133,7 @@ function LockedJobsRow({ t }: { t: (k: string) => string }) {
             </div>
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0d0f14]/75 rounded-2xl px-3 text-center">
               <span className="text-lg mb-1">🔒</span>
-              <a href="/api/checkout" className="px-3 py-1.5 bg-orange-500 hover:bg-orange-400 text-white text-xs font-medium rounded-full transition-all leading-snug">
+              <a href={apiUrl('/api/checkout')} className="px-3 py-1.5 bg-orange-500 hover:bg-orange-400 text-white text-xs font-medium rounded-full transition-all leading-snug">
                 $5 — unlocks all
               </a>
             </div>
@@ -151,7 +152,7 @@ function JobsRow({ career, country, unlocked }: { career: string; country: strin
   const { t } = useLang()
 
   useEffect(() => {
-    fetch(`/api/jobs?career=${encodeURIComponent(career)}&country=${encodeURIComponent(country)}`)
+    fetch(apiUrl(`/api/jobs?career=${encodeURIComponent(career)}&country=${encodeURIComponent(country)}`))
       .then((r) => r.json())
       .then((data) => { setJobs(data); setLoading(false) })
       .catch(() => setLoading(false))
@@ -188,7 +189,7 @@ function JobsRow({ career, country, unlocked }: { career: string; country: strin
             </div>
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0d0f14]/75 rounded-2xl px-3 text-center">
               <span className="text-lg mb-1">🔒</span>
-              <a href="/api/checkout" className="px-3 py-1.5 bg-orange-500 hover:bg-orange-400 text-white text-xs font-medium rounded-full transition-all leading-snug">
+              <a href={apiUrl('/api/checkout')} className="px-3 py-1.5 bg-orange-500 hover:bg-orange-400 text-white text-xs font-medium rounded-full transition-all leading-snug">
                 $5 — unlocks all
               </a>
             </div>
@@ -448,11 +449,11 @@ function EmailSection({ matches, name, t, unlocked }: { matches: CareerMatch[]; 
   const [status, setStatus]   = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
 
   const send = async () => {
-    if (!unlocked) { window.location.href = '/api/checkout'; return }
+    if (!unlocked) { window.location.href = apiUrl('/api/checkout'); return }
     if (!email.includes('@')) return
     setStatus('sending')
     try {
-      const res = await fetch('/api/send-results', {
+      const res = await fetch(apiUrl('/api/send-results'), {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ email, name, matches }),
@@ -702,7 +703,7 @@ export default function ResultsPage() {
   return (
     <div className="min-h-screen bg-[#0d0f14] px-4 py-10 relative overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full bg-orange-500/5 blur-[120px] pointer-events-none" />
-      <div className="fixed top-5 right-5 z-50">
+      <div className="fixed right-5 top-[calc(1.25rem+var(--safe-top))] z-50">
         <LanguageToggle />
       </div>
 
@@ -751,7 +752,7 @@ export default function ResultsPage() {
               {t('See every career path ranked for you — plus skills roadmap, salary insights, and live job listings for each.')}
             </p>
             <a
-              href="/api/checkout"
+              href={apiUrl('/api/checkout')}
               className="block w-full py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-lg text-base transition-colors"
             >
               {t('Unlock All Matches — $5')}

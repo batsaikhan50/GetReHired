@@ -7,6 +7,7 @@ import { ArrowRight, CircleDollarSign, Clock, GraduationCap, MessagesSquare, Bri
 import { MarketingShell } from '@/components/site/MarketingShell'
 import { calculateMatches, type CareerDetail } from '@/lib/scoringEngine'
 import { fieldIcon } from '@/lib/careerIcons'
+import { apiUrl } from '@/lib/api'
 import { useLang } from '@/contexts/LanguageContext'
 import { Star, Sparkle } from '@/components/doodle/Doodles'
 
@@ -41,7 +42,7 @@ export function CareerDetailView({ detail }: { detail: CareerDetail }) {
   useEffect(() => {
     let cancelled = false
     setJobsLoading(true)
-    fetch(`/api/jobs?career=${encodeURIComponent(detail.title)}&country=${encodeURIComponent(country)}`)
+    fetch(apiUrl(`/api/jobs?career=${encodeURIComponent(detail.title)}&country=${encodeURIComponent(country)}`))
       .then((r) => (r.ok ? r.json() : []))
       .then((data) => {
         if (!cancelled) setJobs(Array.isArray(data) ? data.slice(0, 5) : [])

@@ -4,6 +4,7 @@ import { useEffect, useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { CheckCircle2, Loader2 } from 'lucide-react'
+import { apiUrl } from '@/lib/api'
 
 // sessionStorage flag the results page reads to reveal all matches.
 export const UNLOCK_KEY = 'grh_unlocked'
@@ -20,7 +21,7 @@ function SuccessInner() {
       return
     }
     let cancelled = false
-    fetch(`/api/verify-payment?checkout_id=${encodeURIComponent(checkoutId)}`)
+    fetch(apiUrl(`/api/verify-payment?checkout_id=${encodeURIComponent(checkoutId)}`))
       .then((r) => r.json())
       .then((data) => {
         if (cancelled) return

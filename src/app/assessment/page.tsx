@@ -435,13 +435,13 @@ export default function AssessmentPage() {
       <ProgressBar answered={answeredCount} total={totalQuestions} blockId={blockIdx + 1} t={t} />
 
       {/* Language toggle */}
-      <div className="fixed top-4 left-4 z-[60]">
+      <div className="fixed left-4 top-[calc(1rem+var(--safe-top))] z-[60]">
         <LanguageToggle />
       </div>
 
       {/* Dev buttons */}
       {mounted && process.env.NODE_ENV === 'development' && (
-        <div className="fixed top-4 right-4 flex gap-2 z-[60]">
+        <div className="fixed right-4 top-[calc(1rem+var(--safe-top))] flex gap-2 z-[60]">
           <button onClick={skipBlock} className="text-xs text-gray-600 hover:text-gray-400 border border-gray-800 px-3 py-1 rounded-full">skip block →</button>
           <button onClick={skipToResults} className="text-xs text-gray-600 hover:text-gray-400 border border-gray-800 px-3 py-1 rounded-full">→ results</button>
         </div>
@@ -542,7 +542,7 @@ export default function AssessmentPage() {
               dragConstraints={{ top: 0 }}
               dragElastic={{ top: 0, bottom: 0.4 }}
               onDragEnd={(_, info) => { if (info.offset.y > 80) handleRewardContinue() }}
-              className="fixed bottom-0 inset-x-0 bg-[#161b25] border-t border-gray-800 rounded-t-3xl z-50 overflow-y-auto cursor-grab active:cursor-grabbing"
+              className="fixed bottom-0 inset-x-0 bg-[#161b25] border-t border-gray-800 rounded-t-3xl z-50 overflow-y-auto cursor-grab active:cursor-grabbing pb-[var(--safe-bottom)]"
             >
               <RewardBottomSheet blockId={blockIdx + 1} answers={answers} onContinue={handleRewardContinue} t={t} />
             </motion.div>

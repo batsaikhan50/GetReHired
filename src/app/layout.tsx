@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Caveat } from "next/font/google";
 import { Providers } from "@/components/Providers";
 import "./globals.css";
@@ -19,6 +19,15 @@ const caveat = Caveat({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
+
+// viewportFit cover lets the app draw edge-to-edge on notched phones; fixed
+// chrome offsets itself with the --safe-top/--safe-bottom vars (globals.css).
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#0d0f14",
+};
 
 export const metadata: Metadata = {
   title: "GetReHired — Your next chapter starts here",

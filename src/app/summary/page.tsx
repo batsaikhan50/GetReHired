@@ -40,7 +40,7 @@ export default function SummaryPage() {
 
   return (
     <div className="min-h-screen bg-[#0d0f14] flex flex-col items-center justify-center px-4 py-12 relative overflow-hidden">
-      <div className="fixed top-5 right-5 z-50"><LanguageToggle /></div>
+      <div className="fixed right-5 top-[calc(1.25rem+var(--safe-top))] z-50"><LanguageToggle /></div>
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-orange-500/6 blur-[120px] pointer-events-none" />
 
       <div className="w-full max-w-md relative z-10">

@@ -20,7 +20,7 @@ export function SiteNav() {
   ]
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 bg-[#0d0f14]/80 backdrop-blur-md border-b border-gray-800/60">
+    <header className="fixed top-0 inset-x-0 z-50 bg-[#0d0f14]/80 backdrop-blur-md border-b border-gray-800/60 pt-[var(--safe-top)]">
       <nav className="max-w-6xl mx-auto flex items-center justify-between px-4 sm:px-6 h-16">
         {/* Logo */}
         <Link href="/" className="flex items-baseline gap-1 group">

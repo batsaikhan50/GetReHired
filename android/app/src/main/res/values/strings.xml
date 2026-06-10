@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">GetReHired</string>
+    <string name="title_activity_main">GetReHired</string>
+    <string name="package_name">com.getrehired.app</string>
+    <string name="custom_url_scheme">com.getrehired.app</string>
+</resources>

@@ -28,15 +28,28 @@ const securityHeaders = [
   },
 ]
 
-const nextConfig: NextConfig = {
-  async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: securityHeaders,
+// BUILD_TARGET=mobile produces a static export (./out) that gets bundled into
+// the Capacitor Android/iOS apps. API routes are excluded by scripts/build-mobile.sh;
+// the apps call the deployed server through NEXT_PUBLIC_API_BASE instead.
+const isMobile = process.env.BUILD_TARGET === 'mobile'
+
+const nextConfig: NextConfig = isMobile
+  ? {
+      output: 'export',
+      // Folder-per-route (about/index.html) so the Capacitor web server
+      // resolves deep links like /about without an .html suffix.
+      trailingSlash: true,
+      images: { unoptimized: true },
+    }
+  : {
+      async headers() {
+        return [
+          {
+            source: '/(.*)',
+            headers: securityHeaders,
+          },
+        ]
       },
-    ]
-  },
-}
+    }
 
 export default nextConfig;

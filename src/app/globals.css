@@ -8,6 +8,9 @@
   --muted: #6b7280;
   --card: #161b25;
   --border: #1f2937;
+  /* Notch / Dynamic Island / home-indicator insets (0 outside the mobile apps) */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 @theme inline {

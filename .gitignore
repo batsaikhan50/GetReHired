@@ -34,6 +34,7 @@ yarn-error.log*
 .env*
 # ...but keep the example template tracked so required vars are documented
 !.env.example
+!.env.mobile
 
 # vercel
 .vercel
