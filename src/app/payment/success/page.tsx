@@ -4,7 +4,7 @@ import { useEffect, useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { CheckCircle2, Loader2 } from 'lucide-react'
-import { apiUrl } from '@/lib/api'
+import { apiUrl, PAYMENT_MOCK } from '@/lib/api'
 
 // sessionStorage flag the results page reads to reveal all matches.
 export const UNLOCK_KEY = 'grh_unlocked'
@@ -19,6 +19,17 @@ function SuccessInner() {
     if (!checkoutId) {
       setState('failed')
       return
+    }
+    // Dev mock builds have no server to verify against; accept the mock id.
+    if (PAYMENT_MOCK && checkoutId === 'dev_mock') {
+      try {
+        sessionStorage.setItem(UNLOCK_KEY, '1')
+      } catch {
+        /* ignore */
+      }
+      setState('paid')
+      const timer = setTimeout(() => router.push('/results'), 1600)
+      return () => clearTimeout(timer)
     }
     let cancelled = false
     fetch(apiUrl(`/api/verify-payment?checkout_id=${encodeURIComponent(checkoutId)}`))

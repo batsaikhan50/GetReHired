@@ -3,8 +3,9 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { calculateMatches, careerSlug, CareerMatch } from '@/lib/scoringEngine'
-import { apiUrl } from '@/lib/api'
+import { apiUrl, checkoutUrl, PAYMENT_MOCK } from '@/lib/api'
 import { LanguageToggle } from '@/components/LanguageToggle'
 import { useLang } from '@/contexts/LanguageContext'
 import {
@@ -14,6 +15,14 @@ import {
 } from '@/lib/automationData'
 
 type Answers = Record<string, string | string[]>
+
+// Unlock CTA. The real checkout is a server redirect (full page load), but the
+// dev mock page is bundled, so it must be a client-side <Link> — the Capacitor
+// webview's local server can't resolve full loads of nested routes.
+function UnlockLink({ className, children }: { className: string; children: React.ReactNode }) {
+  if (PAYMENT_MOCK) return <Link href="/payment/mock" className={className}>{children}</Link>
+  return <a href={checkoutUrl()} className={className}>{children}</a>
+}
 
 interface Job {
   id: string
@@ -133,9 +142,9 @@ function LockedJobsRow({ t }: { t: (k: string) => string }) {
             </div>
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#faf8f4]/75 backdrop-blur-[1px] rounded-xl px-3 text-center">
               <span className="text-lg mb-1">🔒</span>
-              <a href={apiUrl('/api/checkout')} className="px-3 py-1.5 bg-stone-900 hover:bg-stone-700 text-[#faf8f4] text-xs rounded-full transition-colors leading-snug">
+              <UnlockLink className="px-3 py-1.5 bg-stone-900 hover:bg-stone-700 text-[#faf8f4] text-xs rounded-full transition-colors leading-snug">
                 $5 — unlocks all
-              </a>
+              </UnlockLink>
             </div>
           </div>
         ))}
@@ -189,9 +198,9 @@ function JobsRow({ career, country, unlocked }: { career: string; country: strin
             </div>
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#faf8f4]/75 backdrop-blur-[1px] rounded-xl px-3 text-center">
               <span className="text-lg mb-1">🔒</span>
-              <a href={apiUrl('/api/checkout')} className="px-3 py-1.5 bg-stone-900 hover:bg-stone-700 text-[#faf8f4] text-xs rounded-full transition-colors leading-snug">
+              <UnlockLink className="px-3 py-1.5 bg-stone-900 hover:bg-stone-700 text-[#faf8f4] text-xs rounded-full transition-colors leading-snug">
                 $5 — unlocks all
-              </a>
+              </UnlockLink>
             </div>
           </div>
         ))}
@@ -447,9 +456,14 @@ function ShareSection({ matches, t }: { matches: CareerMatch[]; t: (k: string) =
 function EmailSection({ matches, name, t, unlocked }: { matches: CareerMatch[]; name: string; t: (k: string) => string; unlocked: boolean }) {
   const [email, setEmail]     = useState('')
   const [status, setStatus]   = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const router = useRouter()
 
   const send = async () => {
-    if (!unlocked) { window.location.href = apiUrl('/api/checkout'); return }
+    if (!unlocked) {
+      if (PAYMENT_MOCK) router.push('/payment/mock')
+      else window.location.href = checkoutUrl()
+      return
+    }
     if (!email.includes('@')) return
     setStatus('sending')
     try {
@@ -750,12 +764,9 @@ export default function ResultsPage() {
             <p className="text-stone-500 text-sm mb-5">
               {t('See every career path ranked for you — plus skills roadmap, salary insights, and live job listings for each.')}
             </p>
-            <a
-              href={apiUrl('/api/checkout')}
-              className="block w-full py-3.5 bg-stone-900 hover:bg-stone-700 text-[#faf8f4] rounded-md text-base transition-colors"
-            >
+            <UnlockLink className="block w-full py-3.5 bg-stone-900 hover:bg-stone-700 text-[#faf8f4] rounded-md text-base transition-colors">
               {t('Unlock All Matches — $5')}
-            </a>
+            </UnlockLink>
             <p className="text-xs text-stone-400 mt-3">{t('One-time payment. No subscription.')}</p>
           </motion.div>
         )}
