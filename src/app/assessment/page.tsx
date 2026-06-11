@@ -252,18 +252,26 @@ export default function AssessmentPage() {
   }, [blockIdx, questionIdx])
 
   // Swipe between questions on touch devices: left advances (same gate as the
-  // buttons — current question must be answered), right goes back. The dy
+  // buttons — current question must be answered), right goes back. Positions
+  // are tracked on touchmove because the browser fires touchcancel (not
+  // touchend) once it takes over the gesture for scrolling; the dominance
   // check keeps vertical scrolling through long option lists from triggering it.
   const touchStart = useRef<{ x: number; y: number } | null>(null)
+  const touchLast = useRef<{ x: number; y: number } | null>(null)
   const onTouchStart = (e: React.TouchEvent) => {
     touchStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }
+    touchLast.current = touchStart.current
   }
-  const onTouchEnd = (e: React.TouchEvent) => {
-    if (!touchStart.current) return
-    const dx = e.changedTouches[0].clientX - touchStart.current.x
-    const dy = e.changedTouches[0].clientY - touchStart.current.y
+  const onTouchMove = (e: React.TouchEvent) => {
+    touchLast.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }
+  }
+  const onTouchEnd = () => {
+    if (!touchStart.current || !touchLast.current) return
+    const dx = touchLast.current.x - touchStart.current.x
+    const dy = touchLast.current.y - touchStart.current.y
     touchStart.current = null
-    if (showReward || Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return
+    touchLast.current = null
+    if (showReward || Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.2) return
     if (dx < 0) {
       if (canProceed(block.questions[questionIdx])) advance()
     } else {
@@ -476,7 +484,7 @@ export default function AssessmentPage() {
       )}
 
       {/* Card Carousel */}
-      <div ref={carouselRef} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} className="relative flex-1 overflow-x-hidden flex items-start justify-center pt-12">
+      <div ref={carouselRef} onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd} onTouchCancel={onTouchEnd} style={{ touchAction: 'pan-y' }} className="relative flex-1 overflow-x-hidden flex items-start justify-center pt-12">
         {block.questions.map((q, idx) => {
           const offset = idx - questionIdx
           if (Math.abs(offset) > 1) return null
