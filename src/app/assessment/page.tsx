@@ -251,6 +251,26 @@ export default function AssessmentPage() {
     carouselRef.current?.scrollTo(0, 0)
   }, [blockIdx, questionIdx])
 
+  // Swipe between questions on touch devices: left advances (same gate as the
+  // buttons — current question must be answered), right goes back. The dy
+  // check keeps vertical scrolling through long option lists from triggering it.
+  const touchStart = useRef<{ x: number; y: number } | null>(null)
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }
+  }
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (!touchStart.current) return
+    const dx = e.changedTouches[0].clientX - touchStart.current.x
+    const dy = e.changedTouches[0].clientY - touchStart.current.y
+    touchStart.current = null
+    if (showReward || Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return
+    if (dx < 0) {
+      if (canProceed(block.questions[questionIdx])) advance()
+    } else {
+      handleBack()
+    }
+  }
+
   // Lock back button (popstate) while answering — swipe gesture blocked via layout CSS
   useEffect(() => {
     history.pushState(null, '', window.location.href)
@@ -456,7 +476,7 @@ export default function AssessmentPage() {
       )}
 
       {/* Card Carousel */}
-      <div ref={carouselRef} className="relative flex-1 overflow-x-hidden flex items-start justify-center pt-12">
+      <div ref={carouselRef} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} className="relative flex-1 overflow-x-hidden flex items-start justify-center pt-12">
         {block.questions.map((q, idx) => {
           const offset = idx - questionIdx
           if (Math.abs(offset) > 1) return null
